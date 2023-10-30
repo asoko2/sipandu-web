@@ -1,14 +1,14 @@
 @extends('layout.app')
-@section('title', 'Edit Desa')
+@section('title', 'Tambah Desa')
 @section('page-nav')
     <div class="col-sm-6">
-        <h1 class="m-0">Edit Desa</h1>
+        <h1 class="m-0">Tambah Desa</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ url('/admin/master-desa') }}">Master Desa</a></li>
-            <li class="breadcrumb-item active">Edit Desa</li>
+            <li class="breadcrumb-item active">Tambah Desa</li>
         </ol>
     </div><!-- /.col -->
 @endsection
@@ -17,41 +17,43 @@
         <div class="col-12">
             <div class="card card-info">
                 <div class="card-header">
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    @if (Session::has('message'))
-                        <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            {{ Session::get('message') }}
-                        </div>
-                    @endif
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('update-desa', ['id' => $data->id]) }}?_method=PUT"
-                    method="POST">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (Session::has('message'))
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
+                <form class="form-horizontal" action="{{ route('store-desa') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="kode_desa" class="col-sm-2 col-form-label">Desa</label>
+                            <label for="kode_desa" class="col-sm-2 col-form-label">Kode Desa</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="kode_desa" id="kode_desa"
-                                    placeholder="Desa" value="{{ $data->kode_desa }}" readonly>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend" bis_skin_checked="1">
+                                        <span class="input-group-text">35.22.20.</span>
+                                    </div>
+                                    <input type="text" class="form-control" name="kode_desa" id="kode_desa"
+                                        placeholder="Kode Desa" value="{{ old('kode_desa') }}">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="nama_desa" class="col-sm-2 col-form-label">Desa</label>
+                            <label for="nama_desa" class="col-sm-2 col-form-label">Nama Desa</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="nama_desa" id="nama_desa"
-                                    placeholder="Desa" value="{{ $data->nama_desa }}">
+                                    placeholder="Nama Desa" value="{{ old('nama_Desa') }}">
                             </div>
                         </div>
                         <div class="form-group row">

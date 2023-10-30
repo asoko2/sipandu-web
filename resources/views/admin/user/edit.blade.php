@@ -1,14 +1,14 @@
 @extends('layout.app')
-@section('title', 'Edit Desa')
+@section('title', 'Edit User')
 @section('page-nav')
     <div class="col-sm-6">
-        <h1 class="m-0">Edit Desa</h1>
+        <h1 class="m-0">Edit User</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('/admin/master-desa') }}">Master Desa</a></li>
-            <li class="breadcrumb-item active">Edit Desa</li>
+            <li class="breadcrumb-item"><a href="{{ url('/admin/master-user') }}">Master User</a></li>
+            <li class="breadcrumb-item active">Edit User</li>
         </ol>
     </div><!-- /.col -->
 @endsection
@@ -36,22 +36,58 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('update-desa', ['id' => $data->id]) }}?_method=PUT"
+                <form class="form-horizontal" action="{{ route('update-user', ['id' => $data->id]) }}?_method=PUT"
                     method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="kode_desa" class="col-sm-2 col-form-label">Desa</label>
+                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="kode_desa" id="kode_desa"
-                                    placeholder="Desa" value="{{ $data->kode_desa }}" readonly>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Nama"
+                                    value="{{ old('name', $data->name) }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="nama_desa" class="col-sm-2 col-form-label">Desa</label>
+                            <label for="username" class="col-sm-2 col-form-label">Username</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="nama_desa" id="nama_desa"
-                                    placeholder="Desa" value="{{ $data->nama_desa }}">
+                                <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="Username" value="{{ old('username', $data->username) }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="role_id" class="col-sm-2 col-form-label">Role</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="role_id" name="role_id" required>
+                                    <option value="">-- Pilih Role --</option>
+                                    @php
+                                        $role = DB::table('roles')
+                                            ->orderBy('id')
+                                            ->get();
+                                    @endphp
+                                    @foreach ($role as $r)
+                                        <option value="{{ $r->id }}"
+                                            {{ $data->role_id == $r->id ? 'selected' : '' }}>{{ $r->role }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kode_Desa" class="col-sm-2 col-form-label">Desa</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="kode_desa" name="kode_desa"
+                                    {{ $data->role_id == 1 || $data->role_id == 2 ? 'disabled' : '' }} required>
+                                    <option value="">-- Pilih Desa --</option>
+                                    @php
+                                        $desa = DB::table('desas')
+                                            ->orderBy('id')
+                                            ->get();
+                                    @endphp
+                                    @foreach ($desa as $d)
+                                        <option value="{{ $d->kode_desa }}"
+                                            {{ $data->kode_desa == $d->kode_desa ? 'selected' : '' }}>{{ $d->nama_desa }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -83,21 +119,6 @@
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         $(function() {
-            //   $("#example1").DataTable({
-            //     "responsive": true
-            //     , "lengthChange": false
-            //     , "autoWidth": false
-            //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            //   $('#example2').DataTable({
-            //     "paging": true
-            //     , "lengthChange": false
-            //     , "searching": false                   
-            //     , "ordering": true
-            //     , "info": true
-            //     , "autoWidth": false
-            //     , "responsive": true
-            //   , });
-
             $('#example1').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -108,7 +129,7 @@
                 },
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "{{ route('get-desa-json') }}",
+                    "url": "{{ route('get-user-json') }}",
                     "type": "POST",
                 },
                 //Set column definition initialisation properties.
@@ -126,8 +147,8 @@
                         name: "no",
                     },
                     {
-                        data: "desa",
-                        name: "desa",
+                        data: "user",
+                        name: "user",
                     },
                     {
                         data: "action",
@@ -135,6 +156,14 @@
                     }
                 ],
             });
+
+            $('#role_id').on('change', function() {
+                if ($(this).val() == 3) {
+                    $('#kode_desa').attr('disabled', false)
+                } else {
+                    $('#kode_desa').attr('disabled', true)
+                }
+            })
         });
     </script>
 @endpush

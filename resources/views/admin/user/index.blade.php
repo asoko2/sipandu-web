@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Master Desa')
+@section('title', 'Master User')
 @push('style')
     <!-- DataTables -->
     <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -8,12 +8,12 @@
 @endpush
 @section('page-nav')
     <div class="col-sm-6">
-        <h1 class="m-0">Master Desa</h1>
+        <h1 class="m-0">Master User</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Master Desa</li>
+            <li class="breadcrumb-item active">Master User</li>
         </ol>
     </div><!-- /.col -->
 @endsection
@@ -22,8 +22,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('tambah-desa') }}" class="btn btn-primary"><i
-                            class="fas fa-plus fa-sm"></i>&nbsp;&nbsp;Desa</a>
+                    <a href="{{ route('tambah-user') }}" class="btn btn-primary"><i
+                            class="fas fa-plus fa-sm"></i>&nbsp;&nbsp;User</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -37,8 +37,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kode Desa</th>
-                                <th>Nama Desa</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Desa</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -76,16 +78,16 @@
                 },
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": "{{ route('get-desa-json') }}",
+                    "url": "{{ route('get-user-json') }}",
                     "type": "POST",
                 },
                 //Set column definition initialisation properties.
                 "columnDefs": [{
-                        "targets": [0, 3], //first column / numbering column
+                        "targets": [0, 5], //first column / numbering column
                         "orderable": false, //set not orderable
                     },
                     {
-                        "targets": [3],
+                        "targets": [5],
                         "width": "15%",
                     },
                 ],
@@ -94,8 +96,16 @@
                         name: "no",
                     },
                     {
-                        data: "kode_desa",
-                        name: "kode_desa",
+                        data: "name",
+                        name: "name",
+                    },
+                    {
+                        data: "username",
+                        name: "username",
+                    },
+                    {
+                        data: "role",
+                        name: "role",
                     },
                     {
                         data: "nama_desa",
@@ -112,17 +122,17 @@
                 var id = $(this).data('id')
 
                 $.ajax({
-                    url: '{{ route('get-desa-by-id') }}',
+                    url: '{{ route('get-user-by-id') }}',
                     method: 'post',
                     type: 'ajax',
                     data: {
                         id: id
                     },
                     dataType: 'json',
-                    success: function(desa) {
+                    success: function(user) {
                         Swal.fire({
                             title: 'WARNING!!!',
-                            text: `Apakah anda yakin akan menghapus desa ${desa.nama_desa} ?`,
+                            text: `Apakah anda yakin akan menghapus user ${user.name} ?`,
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -132,11 +142,11 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: '{{ route('delete-desa-by-id') }}',
+                                    url: '{{ route('delete-user-by-id') }}',
                                     method: 'post',
                                     type: 'ajax',
                                     data: {
-                                        id: desa.id
+                                        id: user.id
                                     },
                                     dataType: 'json',
                                     success: function(data) {
@@ -151,7 +161,7 @@
                                     error: function(err) {
                                         Swal.fire(
                                             'Gagal Hapus',
-                                            `Gagal Hapus desa ${desa.nama_Desa}`,
+                                            `Gagal Hapus user ${user.name}`,
                                             'error'
                                         )
                                     }
@@ -159,7 +169,7 @@
                             } else {
                                 Swal.fire(
                                     'Dibatalkan',
-                                    `Hapus desa ${data.nama_desa} dibatalkan`,
+                                    `Hapus user ${data.name} dibatalkan`,
                                     'error'
                                 )
                             }

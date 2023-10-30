@@ -24,7 +24,24 @@ class StoreDesaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kode_desa' => 'unique:desas,kode_desa|required',
+            'nama_desa' => 'required',
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'kode_desa.required' => "Kode Desa harus diisi",
+            'kode_desa.unique' => 'Kode Desa sudah ada. Silahkan pilih kode yang lain',
+            'nama_desa.required' => 'Nama Desa harus diisi'
+        ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'kode_desa' => '35.22.20.' . $this->kode_desa,
+        ]);
     }
 }

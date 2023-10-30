@@ -119,7 +119,7 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                        id="sidebar-menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
                         <li class="nav-item">
@@ -131,41 +131,47 @@ with font-awesome or any other icon font library -->
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-database"></i>
-                                <p>
-                                    Master Data
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/master-role') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Master Role</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/master-desa') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Master Desa</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/master-user') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Master User</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/master-anggaran') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Master Anggaran</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (Auth::user()->role_id == 1)
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-database"></i>
+                                    <p>
+                                        Master Data
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/master-role') }}"
+                                            class="nav-link {{ $nav == 'master-role' ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Master Role</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/master-desa') }}"
+                                            class="nav-link {{ $nav == 'master-desa' ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Master Desa</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/master-user') }}"
+                                            class="nav-link {{ $nav == 'master-user' ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Master User</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/master-anggaran') }}"
+                                            class="nav-link {{ $nav == 'master-anggaran' ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Master Anggaran</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -232,7 +238,16 @@ with font-awesome or any other icon font library -->
     <script src="{{ asset('js/adminlte.js') }}"></script>
     {{-- Sweetalert --}}
     <script src="{{ asset('sweetalert/sweetalert2.all.min.js') }}"></script>
-    
+
+    <script text="text/javascript">
+        $(document).ready(function() {
+            var element = $('#sidebar-menu > li > ul > li > a.active')
+
+            element.parent().parent().parent().addClass('menu-open');
+            element.parent().parent().parent().children('a').addClass('active');
+        })
+    </script>
+
     @stack('script')
 </body>
 

@@ -6,10 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Desa;
 use App\Http\Requests\StoreDesaRequest;
 use App\Http\Requests\UpdateDesaRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DesaController extends Controller
 {
+    protected $nav;
+
+    public function __construct()
+    {
+        $this->nav = 'master-desa';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +26,7 @@ class DesaController extends Controller
      */
     public function index()
     {
-        return view('admin.desa.index');
+        return view('admin.desa.index', ['nav' => $this->nav]);
     }
 
     /**
@@ -27,7 +36,7 @@ class DesaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.desa.add', ['nav' => $this->nav,]);
     }
 
     /**
@@ -38,7 +47,24 @@ class DesaController extends Controller
      */
     public function store(StoreDesaRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if ($validated) {
+            try {
+                Desa::insert([
+                    'kode_desa' => $request->input('kode_desa'),
+                    'nama_desa' => $request->input('nama_desa'),
+                    'kode_kecamatan' => '35.22.20'
+                ]);
+
+                Session::flash('message', 'Berhasil tambah desa');
+                Session::flash('alert-class', 'alert-success');
+
+                return redirect('/admin/master-desa');
+            } catch (\Throwable $th) {
+                return redirect('/admin/master-desa/tambah-desa')->withErrors($th->getMessage());
+            }
+        }
     }
 
     /**
@@ -82,9 +108,12 @@ class DesaController extends Controller
             $desa->nama_desa = $request->input('nama_desa');
             $desa->save();
 
-            return redirect('/admin/master-desa/edit/' . $id);
+            Session::flash('message', 'Berhasil edit desa');
+            Session::flash('alert-class', 'alert-success');
+
+            return redirect('/admin/master-desa/');
         } catch (\Throwable $th) {
-            return redirect('/admin/master-desa/edit/' . $id)->withErrors($th);
+            return redirect('/admin/master-desa/edit/' . $id)->withErrors($th->getMessage());
         }
     }
 
@@ -99,7 +128,7 @@ class DesaController extends Controller
         //
     }
 
-    public function getDesaJSON(StoreDesaRequest $request)
+    public function getDesaJSON(Request $request)
     {
 
         $columns = array(
@@ -178,5 +207,25 @@ class DesaController extends Controller
         );
 
         echo json_encode($json_data);
+    }
+
+    public function getDesaById(Request $request)
+    {
+
+        $id = $request->input('id');
+        $desa = Desa::where('id', $id)->first();
+
+        echo json_encode($desa);
+    }
+
+    public function deleteDesaById(Request $request)
+    {
+        DB::table('desas')
+            ->where('id', $request->input('id'))
+            ->delete();
+
+        return response()->json([
+            'message' => 'Sukses hapus data'
+        ]);
     }
 }

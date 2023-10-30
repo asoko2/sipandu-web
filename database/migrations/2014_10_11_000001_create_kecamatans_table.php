@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_kecamatan');
+            $table->string('kode_kecamatan')->unique();
             $table->index('kode_kecamatan');
             $table->string('nama_kecamatan');
             $table->timestamps();

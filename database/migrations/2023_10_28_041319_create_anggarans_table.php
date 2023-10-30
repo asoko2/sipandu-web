@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_desa');
             $table->double('total_anggaran', 10, 2);
+            $table->integer('tahun_anggaran');
             $table->timestamps();
         });
 

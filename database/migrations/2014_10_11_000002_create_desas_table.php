@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('desas', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_desa');
+            $table->string('kode_desa')->unique();
             $table->index('kode_desa');
             $table->string('nama_desa');
             $table->string('kode_kecamatan');
