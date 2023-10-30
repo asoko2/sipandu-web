@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
-use App\Http\Requests\StoreDesaRequest;
-use App\Http\Requests\UpdateDesaRequest;
+use App\Models\Anggaran;
+use App\Http\Requests\StoreAnggaranRequest;
+use App\Http\Requests\UpdateAnggaranRequest;
 
-class DesaController extends Controller
+class AnggaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class DesaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDesaRequest  $request
+     * @param  \App\Http\Requests\StoreAnggaranRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDesaRequest $request)
+    public function store(StoreAnggaranRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class DesaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Desa  $desa
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Desa $desa)
+    public function show(Anggaran $anggaran)
     {
         //
     }
@@ -53,10 +53,10 @@ class DesaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Desa  $desa
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Desa $desa)
+    public function edit(Anggaran $anggaran)
     {
         //
     }
@@ -64,11 +64,11 @@ class DesaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDesaRequest  $request
-     * @param  \App\Models\Desa  $desa
+     * @param  \App\Http\Requests\UpdateAnggaranRequest  $request
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDesaRequest $request, Desa $desa)
+    public function update(UpdateAnggaranRequest $request, Anggaran $anggaran)
     {
         //
     }
@@ -76,10 +76,10 @@ class DesaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Desa  $desa
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Desa $desa)
+    public function destroy(Anggaran $anggaran)
     {
         //
     }
