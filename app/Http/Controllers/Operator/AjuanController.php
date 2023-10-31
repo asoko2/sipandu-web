@@ -1,13 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Operator;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ajuan;
 use App\Http\Requests\StoreAjuanRequest;
 use App\Http\Requests\UpdateAjuanRequest;
 
 class AjuanController extends Controller
 {
+    protected $nav;
+
+    public function __construct()
+    {
+        $this->nav = 'pengajuan';
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,7 @@ class AjuanController extends Controller
      */
     public function index()
     {
-        //
+        return view('operator.ajuan.index', ['nav' => $this->nav]);
     }
 
     /**

@@ -69,16 +69,15 @@ class AnggaranController extends Controller
      */
     public function edit($id)
     {
-        $user = DB::table('users')
-            ->leftJoin('desas', 'users.kode_desa', '=', 'desas.kode_desa')
-            ->join('roles', 'users.role_id', '=', 'roles.id')
-            ->select('users.*', 'desas.nama_desa', 'roles.role')
-            ->where('users.id', $id)
+        $anggaran = DB::table('anggarans')
+            ->leftJoin('desas', 'anggarans.kode_desa', '=', 'desas.kode_desa')
+            ->select('anggarans.*', 'desas.nama_desa')
+            ->where('anggarans.id', $id)
             ->first();
 
-        return view('admin.user.edit', [
+        return view('admin.anggaran.edit', [
             'nav' => $this->nav,
-            'data' => $user,
+            'data' => $anggaran,
         ]);
     }
 
@@ -92,25 +91,24 @@ class AnggaranController extends Controller
     public function update(UpdateAnggaranRequest $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'username' => 'unique:users,username,' . $id . ',id',
-            'role_id' => 'required'
+            'total_anggaran' => 'required',
         ]);
 
         try {
-            $user = Anggaran::find($id);
-            $user->name = $request->input('name');
-            $user->username = $request->input('username');
-            $user->role_id = $request->input('role_id');
-            $user->kode_desa = $request->input('kode_desa') ?? null;
-            $user->save();
+            $anggaran = Anggaran::find($id);
 
-            Session::flash('message', 'Berhasil edit user');
+            $b = str_replace(".", "", $request->total_anggaran);
+            $total_anggaran = str_replace(",", ".", $b);
+
+            $anggaran->total_anggaran = $total_anggaran;
+            $anggaran->save();
+
+            Session::flash('message', 'Berhasil edit anggaran');
             Session::flash('alert-class', 'alert-success');
 
-            return redirect('/admin/master-user/');
+            return redirect('/admin/master-anggaran/');
         } catch (\Throwable $th) {
-            return redirect('/admin/master-user/edit/' . $id)->withErrors($th->getMessage());
+            return redirect('/admin/master-anggaran/edit/' . $id)->withErrors($th->getMessage());
         }
     }
 
@@ -184,7 +182,8 @@ class AnggaranController extends Controller
             foreach ($anggarans as $anggaran) {
                 $nestedData['no'] = $i;
                 $nestedData['nama_desa'] = $anggaran->nama_desa;
-                $nestedData['total_anggaran'] = $anggaran->total_anggaran;
+                $nominal = number_format($anggaran->total_anggaran, 2, ',', '.');
+                $nestedData['total_anggaran'] = $nominal;
                 $nestedData['tahun_anggaran'] = $anggaran->tahun_anggaran;
                 $nestedData['action'] = "<a href='" . url('/admin/master-anggaran/edit') . '/' . $anggaran->id . "' title='DETAIL' data='{$anggaran->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
                 ";

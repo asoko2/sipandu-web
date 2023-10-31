@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('dokumentasi')->nullable();
             $table->string('sk_tim_pelaksana')->nullable();
             $table->string('sk_dasar_kegiatan')->nullable();
+            $table->date('tanggal_ajuan');
             $table->char('status', 1)->default(0);
             $table->text('catatan')->nullable();
             $table->timestamps();

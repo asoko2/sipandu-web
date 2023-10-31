@@ -122,16 +122,26 @@
                         id="sidebar-menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
 with font-awesome or any other icon font library -->
+                        @php
+                            $role = 0;
+                            if (Auth::user()->role_id == 1) {
+                                $role = 'admin';
+                            } elseif (Auth::user()->role_id == 2) {
+                                $role = 'verifikator';
+                            } else {
+                                $role = 'operator';
+                            }
+                        @endphp
                         <li class="nav-item">
-                            <a href="{{ url('/' . (Auth::user()->role_id == 1) ? 'admin' : (Auth::user()->role_id == 2 ? 'verifikator' : 'operator') . '/dashboard') }}"
-                                class="nav-link">
+                            <a href="{{ url("/${role}/dashboard") }}"
+                                class="nav-link {{ $nav == 'dashboard' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
                         </li>
-                        @if (Auth::user()->role_id == 1)
+                        @if ($role === 'admin')
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-database"></i>
@@ -170,6 +180,35 @@ with font-awesome or any other icon font library -->
                                         </a>
                                     </li>
                                 </ul>
+                            </li>
+                        @elseif ($role === 'verifikator')
+                            <li class="nav-item">
+                                <a href="{{ url("/${role}/dashboard") }}"
+                                    class="nav-link {{ $nav == 'dashboard' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Cek Ajuan
+                                    </p>
+                                </a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ url('/operator/pengajuan') }}"
+                                    class="nav-link {{ $nav == 'pengajuan' ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-pen-square"></i>
+                                    <p>
+                                        Pengajuan
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/operator/rekap-pengajuan') }}"
+                                    class="nav-link {{ $nav == 'rekap-pengajuan' ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-print"></i>
+                                    <p>
+                                        Rekap Pengajuan
+                                    </p>
+                                </a>
                             </li>
                         @endif
                     </ul>

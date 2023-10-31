@@ -41,53 +41,20 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                            <label for="nama_desa" class="col-sm-2 col-form-label">Desa</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Nama"
-                                    value="{{ old('name', $data->name) }}">
+                                <input type="text" class="form-control" name="nama_desa" id="nama_desa"
+                                    value="{{ old('nama_desa', $data->nama_desa) }}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="anggaranname" class="col-sm-2 col-form-label">Anggaranname</label>
+                            <label for="total_anggaran" class="col-sm-2 col-form-label">Total Anggaran</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="anggaranname" id="anggaranname"
-                                    placeholder="Anggaranname" value="{{ old('anggaranname', $data->anggaranname) }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="role_id" class="col-sm-2 col-form-label">Role</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="role_id" name="role_id" required>
-                                    <option value="">-- Pilih Role --</option>
-                                    @php
-                                        $role = DB::table('roles')
-                                            ->orderBy('id')
-                                            ->get();
-                                    @endphp
-                                    @foreach ($role as $r)
-                                        <option value="{{ $r->id }}"
-                                            {{ $data->role_id == $r->id ? 'selected' : '' }}>{{ $r->role }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kode_Desa" class="col-sm-2 col-form-label">Desa</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="kode_desa" name="kode_desa"
-                                    {{ $data->role_id == 1 || $data->role_id == 2 ? 'disabled' : '' }} required>
-                                    <option value="">-- Pilih Desa --</option>
-                                    @php
-                                        $desa = DB::table('desas')
-                                            ->orderBy('id')
-                                            ->get();
-                                    @endphp
-                                    @foreach ($desa as $d)
-                                        <option value="{{ $d->kode_desa }}"
-                                            {{ $data->kode_desa == $d->kode_desa ? 'selected' : '' }}>{{ $d->nama_desa }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @php
+                                    $anggaran = number_format($data->total_anggaran, 2, ',', '.');
+                                @endphp
+                                <input type="text" class="form-control" name="total_anggaran" id="total_anggaran"
+                                    placeholder="Total Anggaran" value="{{ old('total_anggaran', $anggaran) }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -104,66 +71,15 @@
 @endsection
 
 @push('script')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('/js/sipandu.js?v=') . date('Ymdhis') }}"></script>
     <script>
-        $(function() {
-            $('#example1').DataTable({
-                "processing": true, //Feature control the processing indicator.
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "scrollY": "35vh",
-                "scrollCollapse": true,
-                language: {
-                    processing: false,
-                },
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": "{{ route('get-anggaran-json') }}",
-                    "type": "POST",
-                },
-                //Set column definition initialisation properties.
-                "columnDefs": [{
-                        "targets": [0, 2], //first column / numbering column
-                        "orderable": false, //set not orderable
-                    },
-                    {
-                        "targets": [2],
-                        "width": "15%",
-                    },
-                ],
-                columns: [{
-                        data: "no",
-                        name: "no",
-                    },
-                    {
-                        data: "anggaran",
-                        name: "anggaran",
-                    },
-                    {
-                        data: "action",
-                        name: "action"
-                    }
-                ],
+        $(document).ready(function() {
+            var nominal = document.getElementById("total_anggaran");
+            nominal.addEventListener("keyup", function(e) {
+                // tambahkan 'Rp.' pada saat form di ketik
+                // gunakan fungsi formatNominal() untuk mengubah angka yang di ketik menjadi format angka
+                nominal.value = formatNominal(this.value);
             });
-
-            $('#role_id').on('change', function() {
-                if ($(this).val() == 3) {
-                    $('#kode_desa').attr('disabled', false)
-                } else {
-                    $('#kode_desa').attr('disabled', true)
-                }
-            })
         });
     </script>
 @endpush

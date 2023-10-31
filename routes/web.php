@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DesaController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Operator\AjuanController;
+use App\Http\Controllers\Operator\HomeController as OperatorHomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,8 +70,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/get-anggaran-by-id', [AnggaranController::class, 'getAnggaranById'])->name('get-anggaran-by-id');
             Route::post('/delete-anggaran-by-id', [AnggaranController::class, 'deleteAnggaranById'])->name('delete-anggaran-by-id');
         });
-
     })->middleware('checkRole:1');
+
+    Route::prefix('operator')->group(function () {
+        Route::get('/dashboard', [OperatorHomeController::class, 'index']);
+
+        Route::get('/pengajuan', [AjuanController::class, 'index']);
+    })->middleware('checkRole:3');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
