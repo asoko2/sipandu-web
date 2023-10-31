@@ -185,7 +185,7 @@ class AnggaranController extends Controller
                 $nominal = number_format($anggaran->total_anggaran, 2, ',', '.');
                 $nestedData['total_anggaran'] = $nominal;
                 $nestedData['tahun_anggaran'] = $anggaran->tahun_anggaran;
-                $nestedData['action'] = "<a href='" . url('/admin/master-anggaran/edit') . '/' . $anggaran->id . "' title='DETAIL' data='{$anggaran->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
+                $nestedData['action'] = "<a href='" . url('/admin/master-anggaran/edit') . '/' . $anggaran->id . "' title='EDIT' data='{$anggaran->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
                 ";
 
                 $data[] = $nestedData;

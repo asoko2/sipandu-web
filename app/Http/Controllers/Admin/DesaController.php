@@ -188,7 +188,7 @@ class DesaController extends Controller
                 $nestedData['no'] = $i;
                 $nestedData['kode_desa'] = $desa->kode_desa;
                 $nestedData['nama_desa'] = $desa->nama_desa;
-                $nestedData['action'] = "<a href='" . url('/admin/master-desa/edit') . '/' . $desa->id . "' title='DETAIL' data='{$desa->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
+                $nestedData['action'] = "<a href='" . url('/admin/master-desa/edit') . '/' . $desa->id . "' title='EDIT' data='{$desa->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
                 <a href='javascript:void(0)' title='HAPUS' data-id='{$desa->id}' id='btn-hapus' class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a>
                 ";
 

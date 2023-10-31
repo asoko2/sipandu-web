@@ -183,11 +183,11 @@ with font-awesome or any other icon font library -->
                             </li>
                         @elseif ($role === 'verifikator')
                             <li class="nav-item">
-                                <a href="{{ url("/${role}/dashboard") }}"
-                                    class="nav-link {{ $nav == 'dashboard' ? 'active' : '' }}">
+                                <a href="{{ url('/verifikator/verifikasi') }}"
+                                    class="nav-link {{ $nav == 'verifikasi' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Cek Ajuan
+                                        Verifikasi Ajuan
                                     </p>
                                 </a>
                             </li>
@@ -201,7 +201,7 @@ with font-awesome or any other icon font library -->
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('/operator/rekap-pengajuan') }}"
                                     class="nav-link {{ $nav == 'rekap-pengajuan' ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-print"></i>
@@ -209,7 +209,7 @@ with font-awesome or any other icon font library -->
                                         Rekap Pengajuan
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
                     </ul>
                 </nav>

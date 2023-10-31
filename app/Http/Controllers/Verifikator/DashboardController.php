@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Verifikator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     protected $nav;
 
@@ -13,8 +13,8 @@ class HomeController extends Controller
     {
         $this->nav = 'dashboard';
     }
-    
+
     public function index(){
-        return view('admin.home.index', ['nav' => $this->nav]);
+        return view('verifikator.home.index', ['nav' => $this->nav]);
     }
 }

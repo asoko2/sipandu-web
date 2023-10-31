@@ -13,7 +13,7 @@ class StoreAjuanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreAjuanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'suratPermintaanPembayaranSPP' => 'required|file|max:2048',
+            'rab' => 'required|file|max:2048',
+            'pernyataanPertanggungJawaban' => 'required|file|max:2048',
+            'dpa' => 'required|file|max:2048',
+            'skTimPelaksana' => 'required|file|max:2048',
+            'skDasarKegiatan' => 'required|file|max:2048',
         ];
     }
 }

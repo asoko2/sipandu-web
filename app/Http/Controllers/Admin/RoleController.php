@@ -154,7 +154,7 @@ class RoleController extends Controller
             foreach ($roles as $role) {
                 $nestedData['no'] = $i;
                 $nestedData['role'] = $role->role;
-                $nestedData['action'] = "<a href='" . url('/admin/master-role/edit') . '/' . $role->id . "' title='DETAIL' data='{$role->id}' class='btn btn-primary btn-sm' '><i class='fa fa-pen'></i></a>";
+                $nestedData['action'] = "<a href='" . url('/admin/master-role/edit') . '/' . $role->id . "' title='EDIT' data='{$role->id}' class='btn btn-primary btn-sm' '><i class='fa fa-pen'></i></a>";
 
                 $data[] = $nestedData;
                 $i++;

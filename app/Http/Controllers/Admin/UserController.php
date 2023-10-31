@@ -216,7 +216,7 @@ class UserController extends Controller
                 $nestedData['username'] = $user->username;
                 $nestedData['role'] = $user->role;
                 $nestedData['nama_desa'] = $user->nama_desa;
-                $nestedData['action'] = "<a href='" . url('/admin/master-user/edit') . '/' . $user->id . "' title='DETAIL' data='{$user->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
+                $nestedData['action'] = "<a href='" . url('/admin/master-user/edit') . '/' . $user->id . "' title='EDIT' data='{$user->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
                 <a href='javascript:void(0)' title='HAPUS' data-id='{$user->id}' id='btn-hapus' class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a>
                 ";
 

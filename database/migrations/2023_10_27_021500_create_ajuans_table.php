@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('ajuans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('kode_pengajuan')->unique();
+            $table->string('kode_desa');
             $table->string('surat_permintaan_pembayaran_spp')->nullable();
             $table->string('rab')->nullable();
             $table->string('pernyataan_pertanggungjawaban')->nullable();
@@ -29,6 +31,10 @@ return new class extends Migration
             $table->char('status', 1)->default(0);
             $table->text('catatan')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('ajuans', function (Blueprint $table) {
+            $table->foreign('kode_desa')->references('kode_desa')->on('desas');
         });
     }
 
