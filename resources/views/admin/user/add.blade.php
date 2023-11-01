@@ -86,6 +86,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="no_verifikator" class="col-sm-2 col-form-label">No. Verifikator</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="no_verifikator" id="no_verifikator"
+                                    placeholder="No_verifikator" value="{{ old('no_verifikator') }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-info">SIMPAN</button>
                             </div>

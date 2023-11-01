@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Operator\AjuanController;
 use App\Http\Controllers\Operator\HomeController as OperatorHomeController;
 use App\Http\Controllers\Verifikator\DashboardController;
+use App\Http\Controllers\Verifikator\RekapController;
 use App\Http\Controllers\Verifikator\VerifikasiController;
 use Illuminate\Support\Facades\Route;
 
@@ -77,10 +78,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['checkRole:2']], function () {
-        Route::prefix('verifikator')->group(function(){
+        Route::prefix('verifikator')->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'index']);
 
-            Route::prefix('verifikasi')->group(function(){
+            Route::prefix('verifikasi')->group(function () {
                 Route::get('/', [VerifikasiController::class, 'index']);
                 Route::post('/get-ajuan-json', [VerifikasiController::class, 'getAjuanVerifikasiJSON'])->name('get-ajuan-verifikasi-json');
                 Route::get('/setuju/{id}', [VerifikasiController::class, 'setuju']);
@@ -88,9 +89,14 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/tolak/{id}', [VerifikasiController::class, 'tolak']);
                 Route::post('/tolak/{id}', [VerifikasiController::class, 'verifikasi'])->name('tolak-ajuan');
             });
+            
+            Route::prefix('rekap')->group(function () {
+                Route::get('/', [RekapController::class, 'index']);
+                Route::post('/get-ajuan-json', [RekapController::class, 'getAjuanRekapJSON'])->name('get-ajuan-rekap-json');
+            });
         });
     });
-    
+
     Route::group(['middleware' => ['checkRole:3']], function () {
         Route::prefix('operator')->group(function () {
             Route::get('/dashboard', [OperatorHomeController::class, 'index']);

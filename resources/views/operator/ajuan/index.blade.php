@@ -180,7 +180,7 @@
                                     success: function(data) {
                                         Swal.fire(
                                             'Sukses!',
-                                            'Pengajuan berhasil dibatalkan',
+                                            'Pengajuan berhasil dikirim',
                                             'success'
                                         )
 

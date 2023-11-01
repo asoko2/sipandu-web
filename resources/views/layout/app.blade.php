@@ -97,7 +97,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <div class="flex w-full justify-center items-center">
-                <a href="index3.html" class="brand-link w-full items-center justify-center">
+                <a href="{{ url('/') }}" class="brand-link w-full items-center justify-center">
                     <span class="brand-text font-weight-light">SIPANDU</span>
                 </a>
             </div>
@@ -185,9 +185,18 @@ with font-awesome or any other icon font library -->
                             <li class="nav-item">
                                 <a href="{{ url('/verifikator/verifikasi') }}"
                                     class="nav-link {{ $nav == 'verifikasi' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                         Verifikasi Ajuan
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/verifikator/rekap') }}"
+                                    class="nav-link {{ $nav == 'rekap' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-database"></i>
+                                    <p>
+                                        Rekap Pengajuan
                                     </p>
                                 </a>
                             </li>
@@ -201,15 +210,6 @@ with font-awesome or any other icon font library -->
                                     </p>
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ url('/operator/rekap-pengajuan') }}"
-                                    class="nav-link {{ $nav == 'rekap-pengajuan' ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-print"></i>
-                                    <p>
-                                        Rekap Pengajuan
-                                    </p>
-                                </a>
-                            </li> --}}
                         @endif
                     </ul>
                 </nav>

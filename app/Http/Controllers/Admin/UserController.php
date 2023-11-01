@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Verifikator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -53,13 +54,23 @@ class UserController extends Controller
         ]);
 
         try {
-            User::insert([
+            $user = User::insert([
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->input('role_id'),
                 'kode_desa' => $request->input('kode_desa') ?? null,
             ]);
+
+            dd($user);
+            
+            if($request->input("role_id") == 2){
+
+                Verifikator::insert([
+                    'user_id' => $user->id,
+                ]);
+
+            }
 
             Session::flash('message', 'Berhasil tambah user');
             Session::flash('alert-class', 'alert-success');
