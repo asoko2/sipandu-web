@@ -21,7 +21,7 @@ class AnggaranSeeder extends Seeder
         foreach($desa as $d){
             DB::table('anggarans')->insert([
                 'kode_desa' => $d->kode_desa,
-                'total_anggaran' => 0,
+                'total_anggaran' => 5000000000,
                 'tahun_anggaran' => 2023,
             ]);
         }

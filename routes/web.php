@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DesaController;
+use App\Http\Controllers\Admin\SettingVerifikatorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Operator\AjuanController;
 use App\Http\Controllers\Operator\HomeController as OperatorHomeController;
@@ -74,6 +75,13 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/get-anggaran-by-id', [AnggaranController::class, 'getAnggaranById'])->name('get-anggaran-by-id');
                 Route::post('/delete-anggaran-by-id', [AnggaranController::class, 'deleteAnggaranById'])->name('delete-anggaran-by-id');
             });
+            
+            Route::prefix('setting-verifikator')->group(function(){
+                Route::get('/', [SettingVerifikatorController::class, 'index']);
+                Route::post('/get-verifikator-json', [SettingVerifikatorController::class, 'getVerifikatorJSON'])->name('get-verifikator-json');
+                Route::get('/assign/{id}', [SettingVerifikatorController::class, 'assign']);
+                Route::post('/assign/{id}', [SettingVerifikatorController::class, 'doAssign'])->name('assign-verifikator');
+            });
         });
     });
 
@@ -83,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::prefix('verifikasi')->group(function () {
                 Route::get('/', [VerifikasiController::class, 'index']);
+                Route::get('/{id}', [VerifikasiController::class, 'show']);
                 Route::post('/get-ajuan-json', [VerifikasiController::class, 'getAjuanVerifikasiJSON'])->name('get-ajuan-verifikasi-json');
                 Route::get('/setuju/{id}', [VerifikasiController::class, 'setuju']);
                 Route::post('/setuju/{id}', [VerifikasiController::class, 'verifikasi'])->name('setuju-ajuan');

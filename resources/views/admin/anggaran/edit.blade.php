@@ -71,7 +71,6 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('/js/sipandu.js?v=') . date('Ymdhis') }}"></script>
     <script>
         $(document).ready(function() {
             var nominal = document.getElementById("total_anggaran");

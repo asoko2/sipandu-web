@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DesaSeeder::class,
             UserSeeder::class,
             AnggaranSeeder::class,
+            VerifikatorSeeder::class,
         ]);
     }
 }

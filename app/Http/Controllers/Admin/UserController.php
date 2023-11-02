@@ -54,23 +54,13 @@ class UserController extends Controller
         ]);
 
         try {
-            $user = User::insert([
+            $user = User::create([
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'password' => Hash::make('12345678'),
                 'role_id' => $request->input('role_id'),
                 'kode_desa' => $request->input('kode_desa') ?? null,
             ]);
-
-            dd($user);
-            
-            if($request->input("role_id") == 2){
-
-                Verifikator::insert([
-                    'user_id' => $user->id,
-                ]);
-
-            }
 
             Session::flash('message', 'Berhasil tambah user');
             Session::flash('alert-class', 'alert-success');

@@ -181,6 +181,15 @@ with font-awesome or any other icon font library -->
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/setting-verifikator') }}"
+                                    class="nav-link {{ $nav == 'setting-verifikator' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-wrench"></i>
+                                    <p>
+                                        Setting Verifikator
+                                    </p>
+                                </a>
+                            </li>
                         @elseif ($role === 'verifikator')
                             <li class="nav-item">
                                 <a href="{{ url('/verifikator/verifikasi') }}"
@@ -277,6 +286,7 @@ with font-awesome or any other icon font library -->
     <script src="{{ asset('js/adminlte.js') }}"></script>
     {{-- Sweetalert --}}
     <script src="{{ asset('sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('/js/sipandu.js?v=') . date('Ymdhis') }}"></script>
 
     <script text="text/javascript">
         $(document).ready(function() {

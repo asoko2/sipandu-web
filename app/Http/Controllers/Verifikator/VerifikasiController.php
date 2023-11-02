@@ -24,6 +24,37 @@ class VerifikasiController extends Controller
         return view('verifikator.verifikasi.index', ['nav' => $this->nav]);
     }
 
+    public function show($id)
+    {
+        $ajuan = DB::table('ajuans as a')
+            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_dokumentasi', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan')
+            ->join('desas as d', 'a.kode_desa', '=', 'd.kode_desa')
+            ->join('users as u', 'a.user_id', '=', 'u.id')
+            ->join('anggarans as ag', 'a.kode_desa', '=', 'ag.kode_desa')
+            ->leftJoin('hasil_pemeriksaans as hp', 'a.id', '=', 'hp.ajuan_id')
+            ->where('a.id', $id)
+            ->first();
+
+        $hasil_pemeriksaan = DB::table('hasil_pemeriksaans')
+            ->select('hasil_pemeriksaans.*', 'ajuans.kode_desa', 'desas.nama_desa')
+            ->join('ajuans', 'hasil_pemeriksaans.ajuan_id', '=', 'ajuans.id')
+            ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
+            ->where('ajuans.kode_desa', $ajuan->kode_desa)
+            ->get();
+
+        $realisasi = 0;
+        foreach ($hasil_pemeriksaan as $h) {
+            $realisasi += $h->anggaran_setuju;
+        }
+
+        return view('verifikator.verifikasi.verif', [
+            'nav' => $this->nav,
+            'data' => $ajuan,
+            'realisasi' => $realisasi,
+            'hasil_pemeriksaan' => $hasil_pemeriksaan,
+        ]);
+    }
+
     public function setuju($id)
     {
         $ajuan = Ajuan::find($id);
@@ -61,8 +92,8 @@ class VerifikasiController extends Controller
 
         try {
             $ajuan->save();
-            
-            $verifikasi = DB::table('verifikasi_ajuans')->insert([
+
+            $verifikasi = DB::table('hasil_pemeriksaans')->insert([
                 'user_id' =>  Auth::user()->id,
             ]);
 
@@ -161,9 +192,12 @@ class VerifikasiController extends Controller
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
                 $nestedData['action'] = "
-                <a href='" . url('/verifikator/verifikasi/setuju') . '/' . $ajuan->id . "' title='SETUJU' data='{$ajuan->id}' class='btn btn-success btn-sm'><i class='fa fa-check'></i></a>&nbsp
-                <a href='" . url('/verifikator/verifikasi/tolak') . '/' . $ajuan->id . "' title='TOLAK' data='{$ajuan->id}' class='btn btn-danger btn-sm'><i class='fa fa-times'></i></a>&nbsp
+                <a href='" . url('/verifikator/verifikasi/') . '/' . $ajuan->id . "' title='DETAIL' data='{$ajuan->id}' class='btn btn-info btn-sm'><i class='fa fa-eye'></i></a>&nbsp
                 ";
+                // $nestedData['action'] = "
+                // <a href='" . url('/verifikator/verifikasi/setuju') . '/' . $ajuan->id . "' title='SETUJU' data='{$ajuan->id}' class='btn btn-success btn-sm'><i class='fa fa-check'></i></a>&nbsp
+                // <a href='" . url('/verifikator/verifikasi/tolak') . '/' . $ajuan->id . "' title='TOLAK' data='{$ajuan->id}' class='btn btn-danger btn-sm'><i class='fa fa-times'></i></a>&nbsp
+                // ";
 
                 $data[] = $nestedData;
                 $i++;

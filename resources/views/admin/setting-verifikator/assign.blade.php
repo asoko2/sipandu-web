@@ -1,14 +1,14 @@
 @extends('layout.app')
-@section('title', 'Tambah User')
+@section('title', 'Assign Verifikator')
 @section('page-nav')
     <div class="col-sm-6">
-        <h1 class="m-0">Tambah User</h1>
+        <h1 class="m-0">Assign Verifikator</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ url('/admin/master-user') }}">Master User</a></li>
-            <li class="breadcrumb-item active">Tambah User</li>
+            <li class="breadcrumb-item active">Assign Verifikator</li>
         </ol>
     </div><!-- /.col -->
 @endsection
@@ -36,51 +36,29 @@
                         {{ Session::get('message') }}
                     </div>
                 @endif
-                <form class="form-horizontal" action="{{ route('store-user') }}" method="POST">
+                <form class="form-horizontal" action="{{ route('assign-verifikator', $data->id) }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                            <label for="no" class="col-sm-2 col-form-label">No</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Nama"
-                                    value="{{ old('name') }}">
+                                <input type="text" class="form-control" name="no" id="no" placeholder="No"
+                                    value="{{ old('no', $data->no) }}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="username" class="col-sm-2 col-form-label">Username</label>
+                            <label for="user_id" class="col-sm-2 col-form-label">Verifikator</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="username" id="username"
-                                    placeholder="Username" value="{{ old('username') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="role_id" class="col-sm-2 col-form-label">Role</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="role_id" name="role_id" required>
-                                    <option value="">-- Pilih Role --</option>
+                                <select class="form-control" id="user_id" name="user_id" required>
+                                    <option value="">-- Pilih Verifikator --</option>
                                     @php
-                                        $role = DB::table('roles')
+                                        $query = DB::table('users')
                                             ->orderBy('id')
-                                            ->get();
+                                            ->where('role_id', 2);
+                                        $user = $query->get();
                                     @endphp
-                                    @foreach ($role as $r)
-                                        <option value="{{ $r->id }}">{{ $r->role }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kode_Desa" class="col-sm-2 col-form-label">Desa</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="kode_desa" name="kode_desa" disabled required>
-                                    <option value="">-- Pilih Desa --</option>
-                                    @php
-                                        $desa = DB::table('desas')
-                                            ->orderBy('id')
-                                            ->get();
-                                    @endphp
-                                    @foreach ($desa as $d)
-                                        <option value="{{ $d->kode_desa }}">{{ $d->nama_desa }}</option>
+                                    @foreach ($user as $u)
+                                        <option value="{{ $u->id }}">{{ $u->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
