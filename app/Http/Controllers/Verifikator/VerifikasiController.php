@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Verifikator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ajuan;
+use App\Models\Verifikator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -79,36 +80,37 @@ class VerifikasiController extends Controller
     {
         $ajuan = Ajuan::find($id);
 
-        $requestUrl = $request->getRequestUri();
-        $urlArray = explode('/', $requestUrl);
+        $verifikator = Verifikator::find(Auth::user()->id);
 
-        if ($urlArray[3] === 'setuju') {
-            $ajuan->status = 2;
-        } else {
-            $ajuan->status = 3;
-        }
-
-        $ajuan->catatan = $request->catatan;
+        // dd($ajuan);
+        // dd($request);
+        // dd($verifikator);
+        $b = str_replace(".", "", $request->anggaran_setuju);
+        $anggaran_setuju = str_replace(",", ".", $b);
 
         try {
-            $ajuan->save();
-
-            $verifikasi = DB::table('hasil_pemeriksaans')->insert([
-                'user_id' =>  Auth::user()->id,
+            //code...
+            DB::table('hasil_pemeriksaans')->insert([
+                'ajuan_id' => $ajuan->id,
+                'check_surat_permintaan_pembayaran_spp' => $request->input('check_surat_permintaan_pembayaran_spp'),
+                'check_rab' => $request->input('check_rab'),
+                'check_pernyataan_pertanggungjawaban' => $request->input('check_pernyataan_pertanggungjawaban'),
+                'check_belanja_dpa' => $request->input('check_belanja_dpa'),
+                'check_lapor_pertanggungjawaban' => $request->input('check_lapor_pertanggungjawaban'),
+                'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
+                'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
+                'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
+                'anggaran_setuju' => $anggaran_setuju,
             ]);
 
-            if ($urlArray[3] === 'setuju') {
-                Session::flash('message', 'Berhasil setujui pengajuan ' . $ajuan->kode_pengajuan);
-                Session::flash('alert-class', 'alert-success');
-            } else {
-                Session::flash('message', 'Berhasil tolak pengajuan ' . $ajuan->kode_pengajuan);
-                Session::flash('alert-class', 'alert-success');
-            }
+            Session::flash('message', 'Berhaisl verifikasi ajuan');
+            Session::flase('alert-class', 'alert-info');
 
-
-            return redirect('/verifikator/verifikasi');
+            return redirect('verifikator/verifikasi');
         } catch (\Throwable $th) {
-            return redirect()->to('/verifikator/verifikasi/setuju/' . $id)->withErrors($th->getMessage());
+            //throw $th;
+            return redirect('verifikator/verifikasi/' . $id)->withErrors($th->getMessage());
         }
     }
 

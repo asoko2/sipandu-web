@@ -75,8 +75,8 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/get-anggaran-by-id', [AnggaranController::class, 'getAnggaranById'])->name('get-anggaran-by-id');
                 Route::post('/delete-anggaran-by-id', [AnggaranController::class, 'deleteAnggaranById'])->name('delete-anggaran-by-id');
             });
-            
-            Route::prefix('setting-verifikator')->group(function(){
+
+            Route::prefix('setting-verifikator')->group(function () {
                 Route::get('/', [SettingVerifikatorController::class, 'index']);
                 Route::post('/get-verifikator-json', [SettingVerifikatorController::class, 'getVerifikatorJSON'])->name('get-verifikator-json');
                 Route::get('/assign/{id}', [SettingVerifikatorController::class, 'assign']);
@@ -92,13 +92,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::prefix('verifikasi')->group(function () {
                 Route::get('/', [VerifikasiController::class, 'index']);
                 Route::get('/{id}', [VerifikasiController::class, 'show']);
+                Route::post('/{id}', [VerifikasiController::class, 'verifikasi'])->name('verifikasi-ajuan');
                 Route::post('/get-ajuan-json', [VerifikasiController::class, 'getAjuanVerifikasiJSON'])->name('get-ajuan-verifikasi-json');
                 Route::get('/setuju/{id}', [VerifikasiController::class, 'setuju']);
                 Route::post('/setuju/{id}', [VerifikasiController::class, 'verifikasi'])->name('setuju-ajuan');
                 Route::get('/tolak/{id}', [VerifikasiController::class, 'tolak']);
                 Route::post('/tolak/{id}', [VerifikasiController::class, 'verifikasi'])->name('tolak-ajuan');
             });
-            
+
             Route::prefix('rekap')->group(function () {
                 Route::get('/', [RekapController::class, 'index']);
                 Route::post('/get-ajuan-json', [RekapController::class, 'getAjuanRekapJSON'])->name('get-ajuan-rekap-json');

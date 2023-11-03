@@ -51,7 +51,7 @@
                         {{ Session::get('message') }}
                     </div>
                 @endif
-                <form class="form-horizontal" action="{{ route('setuju-ajuan', $data->id) }}" method="POST"">
+                <form class="form-horizontal" action="{{ route('verifikasi-ajuan', $data->id) }}" method="POST"">
                     @csrf
                     <div class="card-body">
                         <table class="w-6" border="1">
@@ -80,7 +80,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="5"></td>
+                                    <th colspan="5" style="text-align: center;">Checklist Kelengkapan Dokumen</th>
                                 </tr>
                                 <tr class="checklist">
                                     <td>
@@ -117,15 +117,15 @@
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_rab" value="1"
-                                        {{ $data->check_rab == 1 ? 'checked' : '' }}>
+                                            {{ $data->check_rab == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_rab" value="2"
-                                        {{ $data->check_rab == 2 ? 'checked' : '' }}>
+                                            {{ $data->check_rab == 2 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_rab" value="3"
-                                        {{ $data->check_rab == 3 ? 'checked' : '' }}>
+                                            {{ $data->check_rab == 3 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr class="checklist">
@@ -165,15 +165,15 @@
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_belanja_dpa" value="1"
-                                        {{ $data->check_belanja_dpa == 1 ? 'checked' : '' }}>
+                                            {{ $data->check_belanja_dpa == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_belanja_dpa" value="2"
-                                        {{ $data->check_belanja_dpa == 2 ? 'checked' : '' }}>
+                                            {{ $data->check_belanja_dpa == 2 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_belanja_dpa" value="3"
-                                        {{ $data->check_belanja_dpa == 3 ? 'checked' : '' }}>
+                                            {{ $data->check_belanja_dpa == 3 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr class="checklist">
@@ -187,18 +187,15 @@
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_sk_tim_pelaksana"
-                                            value="1"
-                                            {{ $data->check_sk_tim_pelaksana == 1 ? 'checked' : '' }}>
+                                            value="1" {{ $data->check_sk_tim_pelaksana == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_sk_tim_pelaksana"
-                                            value="2"
-                                            {{ $data->check_sk_tim_pelaksana == 2 ? 'checked' : '' }}>
+                                            value="2" {{ $data->check_sk_tim_pelaksana == 2 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_sk_tim_pelaksana"
-                                            value="3"
-                                            {{ $data->check_sk_tim_pelaksana == 3 ? 'checked' : '' }}>
+                                            value="3" {{ $data->check_sk_tim_pelaksana == 3 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr class="checklist">
@@ -212,18 +209,55 @@
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_sk_dasar_kegiatan"
-                                            value="1"
-                                            {{ $data->check_sk_dasar_kegiatan == 1 ? 'checked' : '' }}>
+                                            value="1" {{ $data->check_sk_dasar_kegiatan == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_sk_dasar_kegiatan"
+                                            value="2" {{ $data->check_sk_dasar_kegiatan == 2 ? 'checked' : '' }}>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_sk_dasar_kegiatan"
+                                            value="3" {{ $data->check_sk_dasar_kegiatan == 3 ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" style="text-align: center;">Checklist Persyaratan Lainnya</th>
+                                    <th>ADA</th>
+                                    <th>TIDAK ADA</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <label for="check_lapor_pertanggungjawaban" class="col-form-label">
+                                            Semua pekerjaan/kegiatan sebelumnya telah dilaksanakan dilaporkan
+                                            dipertanggungjawabkan sesuai Peraturan Perundang-undangan.
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_lapor_pertanggungjawaban"
                                             value="2"
-                                            {{ $data->check_sk_dasar_kegiatan == 2 ? 'checked' : '' }}>
+                                            {{ $data->check_lapor_pertanggungjawaban == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_sk_dasar_kegiatan"
+                                        <input class="" type="radio" name="check_lapor_pertanggungjawaban"
                                             value="3"
-                                            {{ $data->check_sk_dasar_kegiatan == 3 ? 'checked' : '' }}>
+                                            {{ $data->check_lapor_pertanggungjawaban == 2 ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <label for="check_patuh_kebijakan" class="col-form-label">
+                                            Mematuhi kebijakan-kebijakan Pemerintah Kabupaten, Pemerintah Provinsi, Pemerintah Pusat, dan/atau amar putusan Pengadilan Tata Usaha Negara.
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_patuh_kebijakan"
+                                            value="2"
+                                            {{ $data->check_patuh_kebijakan == 1 ? 'checked' : '' }}>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_patuh_kebijakan"
+                                            value="3"
+                                            {{ $data->check_patuh_kebijakan == 2 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
@@ -253,7 +287,7 @@
                                 <tr>
                                     <td></td>
                                     <td colspan="4">
-                                        <button type="submit" class="btn btn-success">SETUJU</button>
+                                        <button type="submit" class="btn btn-success">VERIFIKASI</button>
                                     </td>
                                 </tr>
                             </tbody>
