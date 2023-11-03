@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
+    protected $nav;
+
+    public function __construct()
+    {
+        $this->nav = 'master-role';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.role.index');
+        return view('admin.role.index', ['nav' => $this->nav]);
     }
 
     /**
@@ -62,7 +68,7 @@ class RoleController extends Controller
         $role = Role::where('id', $id)->first();
 
         return view('admin.role.edit', [
-            'nav' => 'role',
+            'nav' => $this->nav,
             'data' => $role,
         ]);
     }

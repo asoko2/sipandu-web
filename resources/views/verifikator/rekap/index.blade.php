@@ -45,6 +45,7 @@
                                 <th>SK Tim Pelaksana</th>
                                 <th>SK Dasar Kegiatan</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                     </table>
@@ -134,6 +135,11 @@
                     {
                         data: "status",
                         name: "status",
+                        width: '8.5%',
+                    },
+                    {
+                        data: "action",
+                        name: "action",
                         width: '8.5%',
                     }
                 ],

@@ -28,7 +28,7 @@ class VerifikasiController extends Controller
     public function show($id)
     {
         $ajuan = DB::table('ajuans as a')
-            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_dokumentasi', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan')
+            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.anggaran_setuju')
             ->join('desas as d', 'a.kode_desa', '=', 'd.kode_desa')
             ->join('users as u', 'a.user_id', '=', 'u.id')
             ->join('anggarans as ag', 'a.kode_desa', '=', 'ag.kode_desa')
@@ -52,7 +52,6 @@ class VerifikasiController extends Controller
             'nav' => $this->nav,
             'data' => $ajuan,
             'realisasi' => $realisasi,
-            'hasil_pemeriksaan' => $hasil_pemeriksaan,
         ]);
     }
 
@@ -80,7 +79,7 @@ class VerifikasiController extends Controller
     {
         $ajuan = Ajuan::find($id);
 
-        $verifikator = Verifikator::find(Auth::user()->id);
+        $verifikator = DB::table('verifikators')->where('user_id', Auth::user()->id)->first();
 
         // dd($ajuan);
         // dd($request);
@@ -89,23 +88,49 @@ class VerifikasiController extends Controller
         $anggaran_setuju = str_replace(",", ".", $b);
 
         try {
-            //code...
-            DB::table('hasil_pemeriksaans')->insert([
-                'ajuan_id' => $ajuan->id,
-                'check_surat_permintaan_pembayaran_spp' => $request->input('check_surat_permintaan_pembayaran_spp'),
-                'check_rab' => $request->input('check_rab'),
-                'check_pernyataan_pertanggungjawaban' => $request->input('check_pernyataan_pertanggungjawaban'),
-                'check_belanja_dpa' => $request->input('check_belanja_dpa'),
-                'check_lapor_pertanggungjawaban' => $request->input('check_lapor_pertanggungjawaban'),
-                'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
-                'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
-                'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
-                'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
-                'anggaran_setuju' => $anggaran_setuju,
-            ]);
+            $ajuanVerified = DB::table('hasil_pemeriksaans')->where('ajuan_id', $id)->first();
+
+            $hasil_pemeriksaan_table = DB::table('hasil_pemeriksaans');
+
+            if (!$ajuanVerified) {
+                $hasil_pemeriksaan_table->insert([
+                    'ajuan_id' => $ajuan->id,
+                    'check_surat_permintaan_pembayaran_spp' => $request->input('check_surat_permintaan_pembayaran_spp'),
+                    'check_rab' => $request->input('check_rab'),
+                    'check_pernyataan_pertanggungjawaban' => $request->input('check_pernyataan_pertanggungjawaban'),
+                    'check_belanja_dpa' => $request->input('check_belanja_dpa'),
+                    'check_lapor_pertanggungjawaban' => $request->input('check_lapor_pertanggungjawaban'),
+                    'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
+                    'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
+                    'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                    'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
+                    'anggaran_setuju' => $anggaran_setuju,
+                ]);
+            } else {
+                $hasil_pemeriksaan_table->where('ajuan_id', $id)
+                    ->update([
+                        'ajuan_id' => $ajuan->id,
+                        'check_surat_permintaan_pembayaran_spp' => $request->input('check_surat_permintaan_pembayaran_spp'),
+                        'check_rab' => $request->input('check_rab'),
+                        'check_pernyataan_pertanggungjawaban' => $request->input('check_pernyataan_pertanggungjawaban'),
+                        'check_belanja_dpa' => $request->input('check_belanja_dpa'),
+                        'check_lapor_pertanggungjawaban' => $request->input('check_lapor_pertanggungjawaban'),
+                        'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
+                        'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
+                        'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                        'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
+                        'anggaran_setuju' => $anggaran_setuju,
+                    ]);
+            }
+
+            DB::table('ajuans')
+                ->where('id', $id)
+                ->update([
+                    'catatan' => $request->input('catatan')
+                ]);
 
             Session::flash('message', 'Berhaisl verifikasi ajuan');
-            Session::flase('alert-class', 'alert-info');
+            Session::flash('alert-class', 'alert-info');
 
             return redirect('verifikator/verifikasi');
         } catch (\Throwable $th) {
@@ -178,10 +203,31 @@ class VerifikasiController extends Controller
                 ->count();
         }
 
+        $no_verifikator = Verifikator::where('user_id', Auth::user()->id)->first()->no;
+
+        // dd($no_verifikator);
+
         $data = array();
         if (!empty($ajuans)) {
             $i = $start + 1;
             foreach ($ajuans as $ajuan) {
+
+                $hasil_pemeriksaan = DB::table('hasil_pemeriksaans')->where('ajuan_id', $ajuan->id)->first();
+
+                if ($no_verifikator == 1) {
+                    $verif = $hasil_pemeriksaan->verifikator_1 ?? 0;
+                } else if ($no_verifikator == 2) {
+                    $verif = $hasil_pemeriksaan->verifikator_2 ?? 0;
+                } else if ($no_verifikator == 3) {
+                    $verif = $hasil_pemeriksaan->verifikator_3 ?? 0;
+                } else if ($no_verifikator == 4) {
+                    $verif = $hasil_pemeriksaan->verifikator_4 ?? 0;
+                } else if ($no_verifikator == 5) {
+                    $verif = $hasil_pemeriksaan->verifikator_5 ?? 0;
+                } else {
+                    $verif = $hasil_pemeriksaan->verifikator_5 ?? 0;
+                }
+
                 // dd($ajuan);
                 $nestedData['no'] = $i;
                 $nestedData['kode_pengajuan'] = $ajuan->kode_pengajuan;
@@ -193,6 +239,13 @@ class VerifikasiController extends Controller
                 $nestedData['belanja_dpa'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->belanja_dpa . '" target="_blank">Belanja DPA</a>';
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
+
+                if ($verif == 1) {
+                    $status = 'Sudah Verifikasi';
+                } else {
+                    $status = 'Belum Verifikasi';
+                }
+                $nestedData['status'] = $status;
                 $nestedData['action'] = "
                 <a href='" . url('/verifikator/verifikasi/') . '/' . $ajuan->id . "' title='DETAIL' data='{$ajuan->id}' class='btn btn-info btn-sm'><i class='fa fa-eye'></i></a>&nbsp
                 ";

@@ -7,8 +7,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DesaController;
 use App\Http\Controllers\Admin\SettingVerifikatorController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CetakController;
 use App\Http\Controllers\Operator\AjuanController;
 use App\Http\Controllers\Operator\HomeController as OperatorHomeController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Verifikator\DashboardController;
 use App\Http\Controllers\Verifikator\RekapController;
 use App\Http\Controllers\Verifikator\VerifikasiController;
@@ -91,9 +93,9 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::prefix('verifikasi')->group(function () {
                 Route::get('/', [VerifikasiController::class, 'index']);
-                Route::get('/{id}', [VerifikasiController::class, 'show']);
-                Route::post('/{id}', [VerifikasiController::class, 'verifikasi'])->name('verifikasi-ajuan');
                 Route::post('/get-ajuan-json', [VerifikasiController::class, 'getAjuanVerifikasiJSON'])->name('get-ajuan-verifikasi-json');
+                Route::post('/{id}', [VerifikasiController::class, 'verifikasi'])->name('verifikasi-ajuan')->where('id', '[0-9]+');
+                Route::get('/{id}', [VerifikasiController::class, 'show']);
                 Route::get('/setuju/{id}', [VerifikasiController::class, 'setuju']);
                 Route::post('/setuju/{id}', [VerifikasiController::class, 'verifikasi'])->name('setuju-ajuan');
                 Route::get('/tolak/{id}', [VerifikasiController::class, 'tolak']);
@@ -125,6 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    Route::get('/cetak/{id}', [CetakController::class, 'download'])->name('cetak-verifikasi-ajuan');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

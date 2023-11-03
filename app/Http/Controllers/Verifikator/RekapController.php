@@ -112,8 +112,7 @@ class RekapController extends Controller
                 }
                 $nestedData['status'] = $status;
                 $nestedData['action'] = "
-                <a href='" . url('/verifikator/verifikasi/setuju') . '/' . $ajuan->id . "' title='SETUJU' data='{$ajuan->id}' class='btn btn-success btn-sm'><i class='fa fa-check'></i></a>&nbsp
-                <a href='" . url('/verifikator/verifikasi/tolak') . '/' . $ajuan->id . "' title='TOLAK' data='{$ajuan->id}' class='btn btn-danger btn-sm'><i class='fa fa-times'></i></a>&nbsp
+                <a href='" . route('cetak-verifikasi-ajuan', $ajuan->id) . "' class='btn btn-primary' title='DOWNLOAD' target='_blank'><i class='fa fa-download'></i></a>
                 ";
 
                 $data[] = $nestedData;

@@ -44,6 +44,7 @@
                                 <th>Belanja DPA</th>
                                 <th>SK Tim Pelaksana</th>
                                 <th>SK Dasar Kegiatan</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -82,7 +83,8 @@
                 // Load data for the table's content from an Ajax source
                 "ajax": {
                     "url": "{{ route('get-ajuan-verifikasi-json') }}",
-                    "type": "POST",
+                    "method": "POST",
+                    'type' : 'ajax'
                 },
                 //Set column definition initialisation properties.
                 "columnDefs": [{
@@ -130,6 +132,10 @@
                     {
                         data: "sk_dasar_kegiatan",
                         name: "sk_dasar_kegiatan",
+                    },
+                    {
+                        data: "status",
+                        name: "status",
                     },
                     {
                         data: "action",

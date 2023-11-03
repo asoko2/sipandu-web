@@ -28,6 +28,28 @@
     </div><!-- /.col -->
 @endsection
 @section('content')
+    @php
+        // dd($data);
+        $verifikator = DB::table('verifikators')
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        $no = $verifikator->no;
+
+        if ($no == 1) {
+            $verif = $data->verifikator_1;
+        } elseif ($no == 2) {
+            $verif = $data->verifikator_2;
+        } elseif ($no == 3) {
+            $verif = $data->verifikator_3;
+        } elseif ($no == 4) {
+            $verif = $data->verifikator_4;
+        } elseif ($no == 5) {
+            $verif = $data->verifikator_5;
+        } else {
+            $verif = $data->verifikator_6;
+        }
+    @endphp
     <div class="row">
         <div class="col-12">
             <div class="card card-info">
@@ -234,29 +256,28 @@
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_lapor_pertanggungjawaban"
-                                            value="2"
+                                            value="1"
                                             {{ $data->check_lapor_pertanggungjawaban == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
                                         <input class="" type="radio" name="check_lapor_pertanggungjawaban"
-                                            value="3"
+                                            value="2"
                                             {{ $data->check_lapor_pertanggungjawaban == 2 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
                                         <label for="check_patuh_kebijakan" class="col-form-label">
-                                            Mematuhi kebijakan-kebijakan Pemerintah Kabupaten, Pemerintah Provinsi, Pemerintah Pusat, dan/atau amar putusan Pengadilan Tata Usaha Negara.
+                                            Mematuhi kebijakan-kebijakan Pemerintah Kabupaten, Pemerintah Provinsi,
+                                            Pemerintah Pusat, dan/atau amar putusan Pengadilan Tata Usaha Negara.
                                         </label>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_patuh_kebijakan"
-                                            value="2"
+                                        <input class="" type="radio" name="check_patuh_kebijakan" value="1"
                                             {{ $data->check_patuh_kebijakan == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_patuh_kebijakan"
-                                            value="3"
+                                        <input class="" type="radio" name="check_patuh_kebijakan" value="2"
                                             {{ $data->check_patuh_kebijakan == 2 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
@@ -265,7 +286,7 @@
                                         <label for="catatan" class="col-form-label">Catatan</label>
                                     </td>
                                     <td colspan="4">
-                                        <textarea class="form-control" name="catatan"></textarea>
+                                        <textarea class="form-control" name="catatan">{{ old('catatan', $data->catatan) }}</textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -273,7 +294,8 @@
                                         <label for="anggaran_setuju" class="col-form-label">Anggaran Disetujui</label>
                                     </td>
                                     <td colspan="4">
-                                        <input class="form-control" name="anggaran_setuju" id="anggaran_setuju">
+                                        <input class="form-control" name="anggaran_setuju" id="anggaran_setuju"
+                                            value="{{ old('anggaran_setuju', $data->anggaran_setuju) }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -281,13 +303,16 @@
                                         <label for="verifikator" class="col-form-label">TTD Verifikator ?</label>
                                     </td>
                                     <td colspan="4">
-                                        <input type="checkbox" name="verifikasi" id="verifikasi">
+                                        <input type="checkbox" name="verifikasi" id="verifikasi"
+                                            {{ $verif == '1' ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td colspan="4">
                                         <button type="submit" class="btn btn-success">VERIFIKASI</button>
+                                        <input action="action" onclick="window.history.go(-1); return false;"
+                                            type="submit" value="BATAL" class="btn btn-danger">
                                     </td>
                                 </tr>
                             </tbody>

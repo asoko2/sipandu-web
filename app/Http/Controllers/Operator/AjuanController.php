@@ -238,7 +238,8 @@ class AjuanController extends Controller
         $ajuan = DB::table('ajuans')
             ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
             ->join('users', 'ajuans.user_id', '=', 'users.id')
-            ->select('ajuans.*', 'desas.nama_desa', 'users.name');
+            ->select('ajuans.*', 'desas.nama_desa', 'users.name')
+            ->where('ajuans.user_id', Auth::user()->id);
 
         $totalData = $ajuan->count();
 
