@@ -179,6 +179,8 @@ return [
 
         // Laravel DomPDF
         \Barryvdh\DomPDF\ServiceProvider::class,
+
+        
     ],
 
     /*

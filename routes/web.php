@@ -128,6 +128,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('/cetak/{id}', [CetakController::class, 'download'])->name('cetak-verifikasi-ajuan');
+    Route::get('/cetak/view/{id}', [CetakController::class, 'view'])->name('view-cetak-verifikasi-ajuan');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

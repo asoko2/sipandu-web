@@ -32,53 +32,115 @@
 
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href=https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    {{-- <link rel="stylesheet"
+        href=https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css') }}"> --}}
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('/css/adminlte.min.css') }}">
+    <style>
+        * {
+            font-family: serif;
+        }
+
+        #ceklist_dokumen tbody td:nth-child(-n+5):nth-child(n+3) {
+            text-align: center;
+        }
+
+        #ceklist_dokumen tbody td:nth-child(2) {
+            padding-left: 12px;
+        }
+
+        #ceklist_dokumen th {
+            padding: 8px;
+        }
+
+        #ceklist_persyaratan {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #ceklist_persyaratan tbody td:nth-child(-n+4):nth-child(n+3) {
+            text-align: center;
+        }
+
+        #ceklist_persyaratan tbody td:nth-child(2) {
+            padding-left: 12px;
+        }
+
+        #verifikator_table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%:
+        }
+
+        #verifikator_table th {
+            border: 1px solid black;
+        }
+
+        #verifikator_table td {
+            border: 1px solid black;
+        }
+
+        .kop_dokumen {
+            width: 100%;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #table_lokasi td {
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="kop_dokumen w-100 items-center text-center">
+    <div class="kop_dokumen w-100 items-center">
         <p>
             REKOMENDASI DAN VERIFIKASI PERSYARATAN<br />
             PENGAJUAN PENCAIRAN ADD, DD, BHPD DAN BHRD
         </p>
     </div>
-    <div class="nama_desa col-sm-3">
-        <div class="row">
-            <div class="col-sm-3">Kabupaten</div>
-            <div class="col-sm-1">:</div>
-            <div class="col-sm-8">Bojonegoro</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">Kecamatan</div>
-            <div class="col-sm-1">:</div>
-            <div class="col-sm-8">Kasiman</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">Desa</div>
-            <div class="col-sm-1">:</div>
-            <div class="col-sm-8">{{ $data->nama_desa }}</div>
-        </div>
-    </div>
+    <table id="table_lokasi">
+        <tbody>
+            <tr>
+                <td>Kabupaten</td>
+                <td>:</td>
+                <td>Bojonegoro</td>
+            </tr>
+            <tr>
+                <td>Kecamatan</td>
+                <td>:</td>
+                <td>Kasiman</td>
+            </tr>
+            <tr>
+                <td>Desa</td>
+                <td>:</td>
+                <td>{{ $data->nama_desa }}</td>
+            </tr>
+        </tbody>
+    </table>
     <br />
     <div class="col-sm-12">
         <p>
             <b>1. Check List Kelengkapan Dokumentasi Pengajuan : </b>
         </p>
     </div>
-    <table class="w-100" border="1" id="ceklist_dokumen">
-        <col style="width:5%;">
+    <table border="1" id="ceklist_dokumen" style="width: 100%; border-collapse: collapse;">
+        <col style="width:3%;">
         <col style="width:50%;">
         <colgroup span="3"></colgroup>
         <thead style="text-transform: uppercase" class="text-center">
             <tr>
-                <th rowspan="3">NO</th>
-                <th rowspan="3">URAIAN</th>
-                <th colspan="3" scope="colgroup" style="text-align: center;">HASIL PEMERIKSAAN</th>
+                <th rowspan="3" style="width: 3%;">NO</th>
+                <th rowspan="3" style="width: 50%;">URAIAN</th>
+                <th colspan="3" scope="colgroup" style="text-align: center;">HASIL PEMERIKSAAN (V)</th>
             </tr>
             <tr>
                 <th scope="colgroup" colspan="2" style="text-align: center">ADA</th>
@@ -86,12 +148,12 @@
             </tr>
             <tr>
                 <th scope="colgroup" style="width: 6%;">SESUAI <br />KETENTUAN</th>
-                <th scope="colgroup" style="width: 5%">TIDAK SESUAI<br /> KETENTUAN</th>
+                <th scope="colgroup" style="width: 5%">TIDAK <br />SESUAI</th>
             </tr>
         </thead>
         <tbody>
             <tr class="checklist">
-                <td style="text-align: center;"><b>1.</b></td>
+                <td style="text-align: center;">1.</td>
                 <td>
                     <label for="suratPermintaanPembayaranSPP" class="col-form-label">Surat Permintaan
                         Pembayaran SPP</label>
@@ -114,7 +176,7 @@
             </tr>
             <tr class="checklist">
                 <td style="text-align: center;">
-                    <b>2.</b>
+                    2.
                 </td>
                 <td>
                     <label for="rab" class="col-form-label">Rencana Anggaran Biaya</label>
@@ -137,7 +199,7 @@
             </tr>
             <tr class="checklist">
                 <td style="text-align: center;">
-                    <b>3. </b>
+                    3.
                 </td>
                 <td>
                     <label for="pernyataanPertanggungJawaban" class="col-form-label">Pernyataan
@@ -162,7 +224,7 @@
             </tr>
             <tr class="checklist">
                 <td style="text-align: center;">
-                    <b>4. </b>
+                    4.
                 </td>
                 <td>
                     <label for="dpa" class="col-form-label">Belanja DPA</label>
@@ -185,7 +247,7 @@
             </tr>
             <tr class="checklist">
                 <td style="text-align: center;">
-                    <b>5. </b>
+                    5.
                 </td>
                 <td>
                     <label for="skTimPelaksana" class="col-form-label">SK Tim Pelaksana</label>
@@ -208,7 +270,7 @@
             </tr>
             <tr class="checklist">
                 <td style="text-align: center;">
-                    <b>6.</b>
+                    6.
                 </td>
                 <td>
                     <label for="skDasarKegiatan" class="col-form-label">SK Dasar Kegiatan</label>
@@ -229,15 +291,6 @@
                     @endif
                 </td>
             </tr>
-
-            <tr>
-                <td>
-                    <label for="catatan" class="col-form-label">Catatan</label>
-                </td>
-                <td colspan="4">
-                    <textarea class="form-control" name="catatan">{{ old('catatan', $data->catatan) }}</textarea>
-                </td>
-            </tr>
         </tbody>
     </table>
     <br />
@@ -246,14 +299,14 @@
             <b>2. Check List Persyaratan Lainnya</b>
         </p>
     </div>
-    <table id="checklis_persyaratan" border="1" class="w-100">
-        <col style="width: 5%;">
+    <table id="ceklist_persyaratan" border="1">
+        <col style="width: 3%;">
         <col style="width: 51%;">
-        <colgroup span="2"></colgroup>
+        <colgroup span="2" style="width: 46%;"></colgroup>
         <thead style="text-align: center;">
             <tr>
-                <th rowspan="2">NO.</th>
-                <th rowspan="2">URAIAN</th>
+                <th rowspan="2" style="width: 3%;">NO.</th>
+                <th rowspan="2" style="width: 51%">URAIAN</th>
                 <th colspan="2">Hasil Pemeriksaan</th>
             </tr>
             <tr>
@@ -322,49 +375,58 @@
         {{ $data->catatan }}
     </div>
     <br />
-    <div class="rekomendasi col-sm-6">
-        <div class="row">
-            <div class="col-sm-6">Rekomendasi ini dibuat di</div>
-            <div class="col-sm-1">:</div>
-            <div>Kecamatan Kasiman</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">Tanggal</div>
-            <div class="col-sm-1">:</div>
-            <div>
-                {{ date('d M Y') }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">Dibuat oleh Petugas verifikasi</div>
-            <div class="col-sm-1">:</div>
-        </div>
-    </div>
-    <table id="verifikator" border="1" class="w-100">
-      <thead style="text-align: center;">
-        <tr>
-          <th style="padding-top: 16px; padding-bottom: 16px;">NAMA</th>
-          <th>TANDA TANGAN</th>
-        </tr>
-      </thead>
-      <tbody>
-        @php
-            $verifikator = DB::table('verifikators as v')
-                              ->select('v.*', 'u.name')
-                              ->join('users as u', 'v.user_id','=','u.id')
-                              ->get();
-        @endphp
-        @foreach ($verifikator as $v)
+    <table id="rekomendasi" style="width: 100%;">
+        <tbody>
             <tr>
-              <td  style="padding-top: 12px; padding-bottom: 12px; padding-left: 24px;">
-                {{ $v->no }}. {{ $v->name }}
-              </td>
-              <td style="padding-left: 24px;">{{ $v->no }}</td>
+                <td>Rekomendasi ini dibuat di</td>
+                <td>:</td>
+                <td>Kecamatan Kasiman</td>
             </tr>
-        @endforeach
-      </tbody>
+            <tr>
+                <td>Tanggal</td>
+                <td>:</td>
+                <td>
+                    {{ date('d M Y') }}
+                </td>
+            </tr>
+            <tr>
+                <td>Dibuat oleh Petugas verifikasi</td>
+                <td>:</td>
+            </tr>
+        </tbody>
     </table>
     <br/>
+    <table id="verifikator_table" style="width: 100%;">
+        <thead style="text-align: center;">
+            <tr>
+                <th style="padding-top: 16px; padding-bottom: 16px; width: 45%">NAMA</th>
+                <th colspan="2" style="width: 55%">TANDA TANGAN</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $verifikator = DB::table('verifikators as v')
+                    ->select('v.*', 'u.name')
+                    ->join('users as u', 'v.user_id', '=', 'u.id')
+                    ->get();
+            @endphp
+            @foreach ($verifikator as $v)
+                <tr>
+                    <td style="padding-top: 12px; padding-bottom: 12px; padding-left: 24px;">
+                        {{ $v->no }}. {{ $v->name }}
+                    </td>
+                    @if ($v->no % 2 == 0)
+                        <td></td>
+                        <td style="padding-left: 24px;">{{ $v->no }}</td>
+                    @else
+                        <td style="padding-left: 24px;">{{ $v->no }}</td>
+                        <td></td>
+                    @endif
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <br />
     <b>*) Coret yang tidak sesuai</b>
 </body>
 
