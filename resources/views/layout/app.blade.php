@@ -190,6 +190,15 @@ with font-awesome or any other icon font library -->
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/rekap') }}"
+                                    class="nav-link {{ $nav == 'rekap' ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-database"></i>
+                                    <p>
+                                        Rekap Pengajuan
+                                    </p>
+                                </a>
+                            </li>
                         @elseif ($role === 'verifikator')
                             <li class="nav-item">
                                 <a href="{{ url('/verifikator/verifikasi') }}"

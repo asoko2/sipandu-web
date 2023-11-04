@@ -1,26 +1,3 @@
-@php
-    // dd($data);
-    $verifikator = DB::table('verifikators')
-        ->where('user_id', Auth::user()->id)
-        ->first();
-
-    $no = $verifikator->no;
-
-    if ($no == 1) {
-        $verif = $data->verifikator_1;
-    } elseif ($no == 2) {
-        $verif = $data->verifikator_2;
-    } elseif ($no == 3) {
-        $verif = $data->verifikator_3;
-    } elseif ($no == 4) {
-        $verif = $data->verifikator_4;
-    } elseif ($no == 5) {
-        $verif = $data->verifikator_5;
-    } else {
-        $verif = $data->verifikator_6;
-    }
-@endphp
-
 <!DOCTYPE html>
 <html lang="en">
 

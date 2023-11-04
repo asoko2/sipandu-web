@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DesaController;
+use App\Http\Controllers\Admin\RekapController as AdminRekapController;
 use App\Http\Controllers\Admin\SettingVerifikatorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CetakController;
@@ -83,6 +84,11 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/get-verifikator-json', [SettingVerifikatorController::class, 'getVerifikatorJSON'])->name('get-verifikator-json');
                 Route::get('/assign/{id}', [SettingVerifikatorController::class, 'assign']);
                 Route::post('/assign/{id}', [SettingVerifikatorController::class, 'doAssign'])->name('assign-verifikator');
+            });
+
+            Route::prefix('rekap')->group(function () {
+                Route::get('/', [AdminRekapController::class, 'index']);
+                Route::post('/get-ajuan-json', [AdminRekapController::class, 'getAjuanRekapJSON'])->name('get-ajuan-rekap-admin-json');
             });
         });
     });
