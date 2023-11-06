@@ -291,6 +291,16 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <label for="anggaran" class="col-form-label">Anggaran yang Diajukan</label>
+                                    </td>
+                                    <td colspan="4">
+                                        <input class="form-control" name="anggaran" id="anggaran"
+                                            value="{{ old('anggaran', number_format($data->anggaran, 2, '.', ',')) }}"
+                                            readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <label for="anggaran_setuju" class="col-form-label">Anggaran Disetujui</label>
                                     </td>
                                     <td colspan="4">
