@@ -42,6 +42,23 @@ class SettingVerifikatorController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        try {
+            Verifikator::insert([
+                'no' => $request->input('no'),
+                'user_id' => $request->input('user_id'),
+            ]);
+
+            Session::flash('message', 'Berhasil tambah verifikator');
+            Session::flash('alert-class', 'alert-success');
+
+            return redirect('/admin/setting-verifikator');
+        } catch (\Throwable $th) {
+            return redirect('/admin/setting-verifikator/tambah-verifikator')->withErrors($th->getMessage());
+        }
+    }
+
     public function assign($id)
     {
         $verifikator = Verifikator::find($id);

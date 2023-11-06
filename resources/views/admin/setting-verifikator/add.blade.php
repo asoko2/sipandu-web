@@ -54,9 +54,14 @@
                                     @php
                                         $query = DB::table('users')
                                             ->orderBy('id')
-                                            ->where('role_id', 2);
+                                            ->where('role_id', 2)
+                                            ->whereNotIn('id', function($query){
+                                                $query->select('user_id')
+                                                ->from('verifikators');
+                                            });
                                         $user = $query->get();
                                     @endphp
+
                                     @foreach ($user as $u)
                                         <option value="{{ $u->id }}">{{ $u->name }}</option>
                                     @endforeach

@@ -201,16 +201,30 @@ with font-awesome or any other icon font library -->
                             </li>
                         @elseif ($role === 'verifikator')
                             <li class="nav-item">
-                                <a href="{{ url('/verifikator/verifikasi') }}"
-                                    class="nav-link {{ $nav == 'verifikasi' ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-check-double"></i>
-                                    <p>
-                                        Verifikasi Ajuan
-                                    </p>
-                                </a>
+                                @php
+                                    $isVerifikator = DB::table('verifikators')
+                                        ->select('*')
+                                        ->where('user_id', Auth::user()->id)
+                                        ->first();
+                                @endphp
+
+                                @if ($isVerifikator)
+                                    <a href="{{ url('/verifikator/verifikasi') }}"
+                                        class="nav-link {{ $nav == 'verifikasi' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-check-double"></i>
+                                        <p>
+                                            Verifikasi Ajuan
+                                        </p>
+                                    </a>
+                                @else
+                                    <div class="nav-link">
+                                        <i class="nav-icon fas fa-check-double"></i>
+                                        <p>Verifikasi Ajuan</p>
+                                    </div>
+                                @endif
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/verifikator/rekap') }}"
+                                <a href="{{ url('/verifikator/rekap') }}" disabled
                                     class="nav-link {{ $nav == 'rekap' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>

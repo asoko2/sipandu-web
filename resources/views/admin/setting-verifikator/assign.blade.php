@@ -54,7 +54,12 @@
                                     @php
                                         $query = DB::table('users')
                                             ->orderBy('id')
-                                            ->where('role_id', 2);
+                                            ->where('role_id', 2)
+                                            ->whereNotIn('id', function($query){
+                                                $query->select('user_id')
+                                                ->from('verifikators');
+                                                // ->whereNot('user_id', $data->user_id);
+                                            });
                                         $user = $query->get();
                                     @endphp
                                     @foreach ($user as $u)
