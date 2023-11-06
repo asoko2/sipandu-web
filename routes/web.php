@@ -15,6 +15,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Verifikator\DashboardController;
 use App\Http\Controllers\Verifikator\RekapController;
 use App\Http\Controllers\Verifikator\VerifikasiController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/create-symbolic-link', function(){
+    Artisan::call('storage:link');
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -82,6 +87,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::prefix('setting-verifikator')->group(function () {
                 Route::get('/', [SettingVerifikatorController::class, 'index']);
                 Route::post('/get-verifikator-json', [SettingVerifikatorController::class, 'getVerifikatorJSON'])->name('get-verifikator-json');
+                Route::get('/tambah-verifikator', [SettingVerifikatorController::class, 'create'])->name('tambah-verifikator');
+                Route::post('/save', [SettingVerifikatorController::class, 'store'])->name('store-verifikator');
                 Route::get('/assign/{id}', [SettingVerifikatorController::class, 'assign']);
                 Route::post('/assign/{id}', [SettingVerifikatorController::class, 'doAssign'])->name('assign-verifikator');
             });

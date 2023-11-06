@@ -22,6 +22,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    <a href="{{ route('tambah-verifikator') }}" class="btn btn-primary"><i
+                            class="fas fa-plus fa-sm"></i>&nbsp;&nbsp;Verifikator</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">

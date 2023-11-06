@@ -24,6 +24,24 @@ class SettingVerifikatorController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $lastVerifikator = DB::table('verifikators')->orderBy('id', 'desc')->limit(1)->first();
+
+        $lastVerifikatorNumber = 0;
+
+        if ($lastVerifikator) {
+            $lastVerifikatorNumber = $lastVerifikator->no += 1;
+        } else {
+            $lastVerifikatorNumber = 1;
+        }
+
+        return view('admin.setting-verifikator.add', [
+            'nav' => $this->nav,
+            'lastVerifikatorNumber' => $lastVerifikatorNumber,
+        ]);
+    }
+
     public function assign($id)
     {
         $verifikator = Verifikator::find($id);
@@ -46,7 +64,7 @@ class SettingVerifikatorController extends Controller
 
             Session::flash('message', 'Berhasil Assign Verifikator No.' . $verifikator->no);
             Session::flash('alert-class', 'alert-success');
-            
+
             return redirect('/admin/setting-verifikator');
         } catch (\Throwable $th) {
             Session::flash('message', $th->getMessage());
