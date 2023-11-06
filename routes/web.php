@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/create-symbolic-link', function(){
+Route::get('/create-symbolic-link', function () {
     Artisan::call('storage:link');
 });
 
@@ -40,6 +40,10 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, 'authenticate']);
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/change-password', [AuthController::class, 'changePassword'])->name('change-password');
+    Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('update-password');
+
     Route::group(['middleware' => ['checkRole:1']], function () {
         Route::prefix('admin')->group(function () {
             Route::get('/dashboard', [HomeController::class, 'index']);
