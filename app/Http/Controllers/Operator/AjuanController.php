@@ -83,6 +83,8 @@ class AjuanController extends Controller
         if ($validated) {
             try {
 
+                $b = str_replace(".", "", $request->anggaran);
+                $anggaran = str_replace(",", ".", $b);
 
                 Ajuan::insert([
                     'user_id' => Auth::user()->id,
@@ -94,6 +96,7 @@ class AjuanController extends Controller
                     'belanja_dpa' => $dpaName,
                     'sk_tim_pelaksana' => $skTimPelaksanaName,
                     'sk_dasar_kegiatan' => $skDasarKegiatanName,
+                    'anggaran' => $anggaran,
                     'tanggal_ajuan' => date('Y-m-d')
                 ]);
 
@@ -190,6 +193,11 @@ class AjuanController extends Controller
         }
 
         try {
+
+            $b = str_replace(".", "", $request->anggaran);
+            $anggaran = str_replace(",", ".", $b);
+            $ajuan->anggaran = $anggaran;
+
             $ajuan->save();
 
             Session::flash('message', 'Berhasil edit pengajuan ' . $ajuan->kode_pengajuan);
@@ -299,6 +307,7 @@ class AjuanController extends Controller
                 $nestedData['belanja_dpa'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->belanja_dpa . '" target="_blank">Belanja DPA</a>';
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
+                $nestedData['anggaran'] = 'Rp. ' . number_format($ajuan->anggaran, 2, '.', ',');
                 if ($ajuan->status == 0) {
                     $status = 'Belum Diajukan';
                 } else if ($ajuan->status == 1) {
