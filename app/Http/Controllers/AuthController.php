@@ -61,6 +61,8 @@ class AuthController extends Controller
         // dd('password betul');
         $user->password = Hash::make($request->input('password'));
 
+        $user->save();
+
         Session::flash('message', 'Password Berhasil Diubah');
         Session::flash('alert-class', 'alert-success');
 
