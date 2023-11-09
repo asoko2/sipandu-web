@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -218,6 +219,7 @@ class UserController extends Controller
                 $nestedData['role'] = $user->role;
                 $nestedData['nama_desa'] = $user->nama_desa;
                 $nestedData['action'] = "<a href='" . url('/admin/master-user/edit') . '/' . $user->id . "' title='EDIT' data='{$user->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>
+                <a href='javascript:void(0)' title='RESET-PASSWORD' data-id='{$user->id}' id='btn-reset-password' class='btn btn-warning btn-sm text-white'><i class='fa fa-sync'></i></a>
                 <a href='javascript:void(0)' title='HAPUS' data-id='{$user->id}' id='btn-hapus' class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a>
                 ";
 
@@ -256,5 +258,24 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Sukses hapus data'
         ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $user->password = Hash::make('12345678');
+
+        try {
+            $user->save();
+
+            return response()->json([
+                'message' => 'Sukses reset password'
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

@@ -177,6 +177,66 @@
                     }
                 })
             })
+
+            $('#example1').on('click', '#btn-reset-password', function() {
+                var id = $(this).data('id')
+
+                $.ajax({
+                    url: '{{ route('get-user-by-id') }}',
+                    method: 'post',
+                    type: 'ajax',
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(user) {
+                        Swal.fire({
+                            title: 'WARNING!!!',
+                            text: `Apakah anda yakin akan merest password user ${user.name} ?`,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'RESET!',
+                            cancelButtonText: 'BATAL',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: '{{ route('reset-password') }}',
+                                    method: 'post',
+                                    type: 'ajax',
+                                    data: {
+                                        id: user.id
+                                    },
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        Swal.fire(
+                                            'BERHASIL!',
+                                            'Password berhasil direset.',
+                                            'success'
+                                        )
+
+                                        table.ajax.reload()
+                                    },
+                                    error: function(err) {
+                                        Swal.fire(
+                                            'Gagal',
+                                            `Gagal reset password user ${user.name}`,
+                                            'error'
+                                        )
+                                    }
+                                })
+                            } else {
+                                Swal.fire(
+                                    'Dibatalkan',
+                                    `Reset password user ${data.name} dibatalkan`,
+                                    'error'
+                                )
+                            }
+                        })
+                    }
+                })
+            })
         });
     </script>
 @endpush

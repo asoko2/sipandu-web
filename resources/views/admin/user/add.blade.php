@@ -61,6 +61,7 @@
                                     @php
                                         $role = DB::table('roles')
                                             ->orderBy('id')
+                                            ->whereNot('id',1)
                                             ->get();
                                     @endphp
                                     @foreach ($role as $r)

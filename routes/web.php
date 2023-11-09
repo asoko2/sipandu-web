@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::put('/edit/{id}', [UserController::class, 'update'])->name('update-user');
                 Route::post('/get-user-by-id', [UserController::class, 'getUserById'])->name('get-user-by-id');
                 Route::post('/delete-user-by-id', [UserController::class, 'deleteUserById'])->name('delete-user-by-id');
+                Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('reset-password');
             });
 
             Route::prefix('master-anggaran')->group(function () {

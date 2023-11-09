@@ -14,7 +14,17 @@ class DashboardController extends Controller
         $this->nav = 'dashboard';
     }
 
-    public function index(){
-        return view('verifikator.home.index', ['nav' => $this->nav]);
+    public function index()
+    {
+        $nama_desa = getListNamaDesa();
+        $anggaran_desa = getListAnggaranDesa();
+        $realisasi_desa = getListRealisasiDesa();
+
+        return view('verifikator.home.index', [
+            'nav' => $this->nav,
+            'nama_desa' => $nama_desa,
+            'anggaran_desa' => $anggaran_desa,
+            'realisasi_desa' => $realisasi_desa,
+        ]);
     }
 }

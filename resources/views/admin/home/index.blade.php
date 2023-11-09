@@ -28,7 +28,58 @@
                 </div>
                 <!-- /.card-body -->
             </div>
+            <div class="card card-default color-palette-box">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <b>
+                            Data Anggaran
+                        </b>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="anggaransChart"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
         </section>
         <!-- right col -->
     </div>
 @endsection
+@php
+    // dd($nama_desa);
+@endphp
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('anggaransChart')
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo $nama_desa; ?>,
+                datasets: [{
+                        label: 'Anggaran Desa',
+                        data: <?php echo $anggaran_desa; ?>,
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        backgroundColor: 'rgba(88, 116, 248, 0.75)',
+                    },
+                    {
+                        label: 'Realisasi Desa',
+                        data: <?php echo $realisasi_desa ?>,
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        backgroundColor: 'rgba(23, 255, 35, 0.75)',
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+@endpush

@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    {{-- <meta charset="UTF-8"> --}}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cetak Ceklis - SiPandu</title>
@@ -18,6 +19,10 @@
     <style>
         * {
             font-family: serif;
+        }
+
+        .checklist {
+            font-family: "DejaVu Sans Mono", monospace;
         }
 
         #ceklist_dokumen tbody td:nth-child(-n+5):nth-child(n+3) {
@@ -101,6 +106,11 @@
                 <td>:</td>
                 <td>{{ $data->nama_desa }}</td>
             </tr>
+            <tr>
+                <td>Kode Pengajuan</td>
+                <td>:</td>
+                <td>{{ $data->kode_pengajuan }}</td>
+            </tr>
         </tbody>
     </table>
     <br />
@@ -137,17 +147,20 @@
                 </td>
                 <td>
                     @if ($data->check_surat_permintaan_pembayaran_spp == 1)
-                        <i class="fas fa-check"></i>
+                        {{-- <span class="checklist">&check;</span> --}}
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_surat_permintaan_pembayaran_spp == 2)
-                        <i class="fas fa-check"></i>
+                        {{-- <span class="checklist">&check;</span> --}}
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_surat_permintaan_pembayaran_spp == 3)
-                        <i class="fas fa-check"></i>
+                        {{-- <span class="checklist">&check;</span> --}}
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -160,17 +173,17 @@
                 </td>
                 <td>
                     @if ($data->check_rab == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_rab == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_rab == 3)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -185,17 +198,17 @@
                 </td>
                 <td>
                     @if ($data->check_pernyataan_pertanggungjawaban == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_pernyataan_pertanggungjawaban == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_pernyataan_pertanggungjawaban == 3)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -208,17 +221,17 @@
                 </td>
                 <td>
                     @if ($data->check_belanja_dpa == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_belanja_dpa == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_belanja_dpa == 3)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -231,17 +244,17 @@
                 </td>
                 <td>
                     @if ($data->check_sk_tim_pelaksana == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_sk_tim_pelaksana == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_sk_tim_pelaksana == 3)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -254,17 +267,17 @@
                 </td>
                 <td>
                     @if ($data->check_sk_dasar_kegiatan == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_sk_dasar_kegiatan == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_sk_dasar_kegiatan == 3)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -304,12 +317,12 @@
                 </td>
                 <td>
                     @if ($data->check_lapor_pertanggungjawaban == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_lapor_pertanggungjawaban == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -325,12 +338,12 @@
                 </td>
                 <td>
                     @if ($data->check_patuh_kebijakan == 1)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
                 <td>
                     @if ($data->check_patuh_kebijakan == 2)
-                        <i class="fas fa-check"></i>
+                        <span class="checklist">&check;</span>
                     @endif
                 </td>
             </tr>
@@ -372,7 +385,7 @@
             </tr>
         </tbody>
     </table>
-    <br/>
+    <br />
     <table id="verifikator_table" style="width: 100%;">
         <thead style="text-align: center;">
             <tr>
