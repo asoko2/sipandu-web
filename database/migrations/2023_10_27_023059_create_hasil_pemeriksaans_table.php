@@ -30,6 +30,7 @@ return new class extends Migration
             $table->char('check_patuh_kebijakan', 1)->nullable();
             $table->char('check_sk_tim_pelaksana', 1)->nullable();
             $table->char('check_sk_dasar_kegiatan', 1)->nullable();
+            $table->char('check_spj', 1)->nullable();
             $table->double('anggaran_setuju', 13, 2);
             $table->timestamps();
         });

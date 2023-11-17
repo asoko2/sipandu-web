@@ -242,6 +242,28 @@
                                             value="3" {{ $data->check_sk_dasar_kegiatan == 3 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
+                                <tr class="checklist">
+                                    <td>
+                                        <label for="spj" class="col-form-label">SPJ</label>
+                                    </td>
+                                    <td>
+                                        <a href="{{ URL::to('/storage/files/' . $data->spj) }}"
+                                            target="_blank">Lihat
+                                            File <i class="fa fa-share-square"></i></a>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_spj"
+                                            value="1" {{ $data->check_spj == 1 ? 'checked' : '' }}>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_spj"
+                                            value="2" {{ $data->check_spj == 2 ? 'checked' : '' }}>
+                                    </td>
+                                    <td>
+                                        <input class="" type="radio" name="check_spj"
+                                            value="3" {{ $data->check_spj == 3 ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th colspan="3" style="text-align: center;">Checklist Persyaratan Lainnya</th>
                                     <th>ADA</th>

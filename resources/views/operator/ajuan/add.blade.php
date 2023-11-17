@@ -101,6 +101,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="spj" class="col-sm-3 col-form-label">SPJ</label>
+                            <div class="input-group col-sm-9">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="spj"
+                                        name="spj" required>
+                                    <label class="custom-file-label" for="spj">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="anggaran" class="col-sm-3 col-form-label">Anggaran yang diajukan</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="anggaran" id="anggaran"

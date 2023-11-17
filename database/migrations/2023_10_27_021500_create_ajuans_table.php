@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('belanja_dpa')->nullable();
             $table->string('lapor_pertanggungjawaban')->nullable();
             $table->string('patuh_kebijakan')->nullable();
-            $table->string('dokumentasi')->nullable();
             $table->string('sk_tim_pelaksana')->nullable();
             $table->string('sk_dasar_kegiatan')->nullable();
+            $table->string('spj')->nullable();
             $table->double('anggaran', 13, 2);
             $table->date('tanggal_ajuan');
             $table->char('status', 1)->default(0);

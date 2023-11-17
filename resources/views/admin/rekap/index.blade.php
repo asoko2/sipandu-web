@@ -44,6 +44,7 @@
                                 <th>Belanja DPA</th>
                                 <th>SK Tim Pelaksana</th>
                                 <th>SK Dasar Kegiatan</th>
+                                <th>SPJ</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -131,6 +132,10 @@
                     {
                         data: "sk_dasar_kegiatan",
                         name: "sk_dasar_kegiatan",
+                    },
+                    {
+                        data: "spj",
+                        name: "spj",
                     },
                     {
                         data: "status",

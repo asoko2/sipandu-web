@@ -61,6 +61,7 @@ class AjuanController extends Controller
         $dpaName = $this->setFileName($request->file('dpa'));
         $skTimPelaksanaName = $this->setFileName($request->file('skTimPelaksana'));
         $skDasarKegiatanName = $this->setFileName($request->file('skDasarKegiatan'));
+        $spjName = $this->setFileName($request->file('spj'));
 
         $lastId = Ajuan::orderBy('id', 'desc')->first();
 
@@ -79,6 +80,7 @@ class AjuanController extends Controller
         $request->file('dpa')->storeAs('public/files', $dpaName);
         $request->file('skTimPelaksana')->storeAs('public/files', $skTimPelaksanaName);
         $request->file('skDasarKegiatan')->storeAs('public/files', $skDasarKegiatanName);
+        $request->file('spj')->storeAs('public/files', $spjName);
 
         if ($validated) {
             try {
@@ -96,6 +98,7 @@ class AjuanController extends Controller
                     'belanja_dpa' => $dpaName,
                     'sk_tim_pelaksana' => $skTimPelaksanaName,
                     'sk_dasar_kegiatan' => $skDasarKegiatanName,
+                    'spj' => $spjName,
                     'anggaran' => $anggaran,
                     'tanggal_ajuan' => date('Y-m-d')
                 ]);
@@ -192,6 +195,13 @@ class AjuanController extends Controller
             $ajuan->sk_dasar_kegiatan = $skDasarKegiatanName;
         }
 
+        if ($request->spj) {
+            $spjName = $this->setFileName($request->file('spj'));
+            Storage::delete('public/files/' . $ajuan->spj);
+            $request->file('spj')->storeAs('public/files', $spjName);
+            $ajuan->spj = $spjName;
+        }
+
         try {
 
             $b = str_replace(".", "", $request->anggaran);
@@ -241,7 +251,8 @@ class AjuanController extends Controller
             5 => 'dpa',
             6 => 'sk_tim_pelaksana',
             7 => 'sk_dasar_kegiatan',
-            8 => 'action',
+            8 => 'spj',
+            9 => 'action',
         );
         $ajuan = DB::table('ajuans')
             ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
@@ -307,6 +318,7 @@ class AjuanController extends Controller
                 $nestedData['belanja_dpa'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->belanja_dpa . '" target="_blank">Belanja DPA</a>';
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
+                $nestedData['spj'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->spj . '" target="_blank">SPJ</a>';
                 $nestedData['anggaran'] = 'Rp. ' . number_format($ajuan->anggaran, 2, '.', ',');
                 if ($ajuan->status == 0) {
                     $status = 'Belum Diajukan';

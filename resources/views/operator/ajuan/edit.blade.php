@@ -111,6 +111,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="spj" class="col-sm-3 col-form-label">SPJ</label>
+                            <div class="input-group col-sm-9">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="spj"
+                                        name="spj" value="{{ old('spj') }}">
+                                    <label class="custom-file-label"
+                                        for="spj">{{ $data->sk_dasar_kegiatan ?? 'Choose File' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="anggaran" class="col-sm-3 col-form-label">Anggaran</label>
                             <div class="col-sm-9">
                                 @php

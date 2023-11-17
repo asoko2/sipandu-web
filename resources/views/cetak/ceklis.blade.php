@@ -281,6 +281,29 @@
                     @endif
                 </td>
             </tr>
+            <tr class="checklist">
+                <td style="text-align: center;">
+                    7.
+                </td>
+                <td>
+                    <label for="skDasarKegiatan" class="col-form-label">SPJ</label>
+                </td>
+                <td>
+                    @if ($data->check_spj == 1)
+                        <span class="checklist">&check;</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($data->check_spj == 2)
+                        <span class="checklist">&check;</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($data->check_spj == 3)
+                        <span class="checklist">&check;</span>
+                    @endif
+                </td>
+            </tr>
         </tbody>
     </table>
     <br />

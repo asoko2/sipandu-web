@@ -34,7 +34,8 @@ class RekapController extends Controller
             5 => 'dpa',
             6 => 'sk_tim_pelaksana',
             7 => 'sk_dasar_kegiatan',
-            8 => 'action',
+            8 => 'spj',
+            9 => 'action',
         );
         $ajuan = DB::table('ajuans')
             ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
@@ -99,6 +100,7 @@ class RekapController extends Controller
                 $nestedData['belanja_dpa'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->belanja_dpa . '" target="_blank">Belanja DPA</a>';
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
+                $nestedData['spj'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->spj . '" target="_blank">SPJ</a>';
                 if ($ajuan->status == 0) {
                     $status = 'Belum Diajukan';
                 } else if ($ajuan->status == 1) {

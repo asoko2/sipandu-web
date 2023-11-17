@@ -28,7 +28,7 @@ class VerifikasiController extends Controller
     public function show($id)
     {
         $ajuan = DB::table('ajuans as a')
-            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.anggaran_setuju')
+            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.check_spj', 'hp.anggaran_setuju')
             ->join('desas as d', 'a.kode_desa', '=', 'd.kode_desa')
             ->join('users as u', 'a.user_id', '=', 'u.id')
             ->join('anggarans as ag', 'a.kode_desa', '=', 'ag.kode_desa')
@@ -81,9 +81,6 @@ class VerifikasiController extends Controller
 
         $verifikator = DB::table('verifikators')->where('user_id', Auth::user()->id)->first();
 
-        // dd($ajuan);
-        // dd($request);
-        // dd($verifikator);
         $b = str_replace(".", "", $request->anggaran_setuju);
         $anggaran_setuju = str_replace(",", ".", $b);
 
@@ -103,6 +100,7 @@ class VerifikasiController extends Controller
                     'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
                     'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
                     'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                    'check_spj' => $request->input('check_spj'),
                     'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
                     'anggaran_setuju' => $anggaran_setuju,
                 ]);
@@ -118,6 +116,7 @@ class VerifikasiController extends Controller
                         'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
                         'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
                         'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                        'check_spj' => $request->input('check_spj'),
                         'verifikator_' . $verifikator->no => $request->input('verifikasi') == 'on' ? 1 : null,
                         'anggaran_setuju' => $anggaran_setuju,
                     ]);
@@ -152,7 +151,8 @@ class VerifikasiController extends Controller
             5 => 'dpa',
             6 => 'sk_tim_pelaksana',
             7 => 'sk_dasar_kegiatan',
-            8 => 'action',
+            8 => 'spj',
+            9 => 'action',
         );
         $ajuan = DB::table('ajuans')
             ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
@@ -239,6 +239,7 @@ class VerifikasiController extends Controller
                 $nestedData['belanja_dpa'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->belanja_dpa . '" target="_blank">Belanja DPA</a>';
                 $nestedData['sk_tim_pelaksana'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_tim_pelaksana . '" target="_blank">SK Tim Pelaksana</a>';
                 $nestedData['sk_dasar_kegiatan'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->sk_dasar_kegiatan . '" target="_blank">SK Dasar Kegiatan</a>';
+                $nestedData['spj'] = '<a href="' . URL::to('/') . '/storage/files/' . $ajuan->spj . '" target="_blank">SPJ</a>';
 
                 if ($verif == 1) {
                     $status = 'Sudah Verifikasi';
