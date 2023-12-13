@@ -7,6 +7,7 @@ use App\Models\Ajuan;
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -56,9 +57,30 @@ class HomeController extends Controller
         return $realisasi;
     }
 
-    private function getTotalAjuan($desa){
+    private function getTotalAjuan($desa)
+    {
         $total_ajuan = Ajuan::where('kode_desa', $desa)->count();
 
         return $total_ajuan;
+    }
+
+    public function readNotification(Request $request)
+    {
+
+        $notifications = DB::table('notifications')
+            ->select('id')
+            ->where('user_id', Auth::user()->id)
+            ->where('read_at', null)
+            ->get();
+
+        foreach ($notifications as $notif => $id) {
+            DB::table('notifications')
+                ->where('id', $id->id)
+                ->update(['status' => '1',]);
+        }
+
+        echo json_encode([
+            'message' => 'success'
+        ]);
     }
 }

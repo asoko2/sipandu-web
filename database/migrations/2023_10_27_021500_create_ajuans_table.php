@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('sk_tim_pelaksana')->nullable();
             $table->string('sk_dasar_kegiatan')->nullable();
             $table->string('spj')->nullable();
+            $table->char('rekomendasi', 1)->nullable();
             $table->double('anggaran', 13, 2);
             $table->date('tanggal_ajuan');
             $table->char('status', 1)->default(0);

@@ -247,21 +247,20 @@
                                         <label for="spj" class="col-form-label">SPJ</label>
                                     </td>
                                     <td>
-                                        <a href="{{ URL::to('/storage/files/' . $data->spj) }}"
-                                            target="_blank">Lihat
+                                        <a href="{{ URL::to('/storage/files/' . $data->spj) }}" target="_blank">Lihat
                                             File <i class="fa fa-share-square"></i></a>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_spj"
-                                            value="1" {{ $data->check_spj == 1 ? 'checked' : '' }}>
+                                        <input class="" type="radio" name="check_spj" value="1"
+                                            {{ $data->check_spj == 1 ? 'checked' : '' }}>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_spj"
-                                            value="2" {{ $data->check_spj == 2 ? 'checked' : '' }}>
+                                        <input class="" type="radio" name="check_spj" value="2"
+                                            {{ $data->check_spj == 2 ? 'checked' : '' }}>
                                     </td>
                                     <td>
-                                        <input class="" type="radio" name="check_spj"
-                                            value="3" {{ $data->check_spj == 3 ? 'checked' : '' }}>
+                                        <input class="" type="radio" name="check_spj" value="3"
+                                            {{ $data->check_spj == 3 ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
@@ -305,6 +304,23 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <label for="rekomendasi" class="col-form-label">
+                                            Hasil Rekomendasi
+                                        </label>
+                                    </td>
+                                    <td colspan="2">
+                                        <input class="" type="radio" name="rekomendasi" value="1"
+                                            {{ $data->rekomendasi == 1 ? 'checked' : '' }}>
+                                            <b>LAYAK</b> atau <b>MEMENUHI SYARAT</b>
+                                    </td>
+                                    <td colspan="2">
+                                        <input class="" type="radio" name="rekomendasi" value="2"
+                                            {{ $data->rekomendasi == 2 ? 'checked' : '' }}>
+                                            <b>TIDAK LAYAK</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <label for="catatan" class="col-form-label">Catatan</label>
                                     </td>
                                     <td colspan="4">
@@ -327,7 +343,7 @@
                                     </td>
                                     <td colspan="4">
                                         <input class="form-control" name="anggaran_setuju" id="anggaran_setuju"
-                                            value="{{ old('anggaran_setuju', $data->anggaran_setuju) }}">
+                                            value="{{ old('anggaran_setuju', $data->anggaran_setuju) }}" readonly>
                                     </td>
                                 </tr>
                                 <tr>
@@ -370,6 +386,15 @@
                 // gunakan fungsi formatNominal() untuk mengubah angka yang di ketik menjadi format angka
                 nominal.value = formatNominal(this.value);
             });
+
+            $('input[name="rekomendasi"]').on('click', function(){
+                if($(this).val() == 1){
+                    $('#anggaran_setuju').attr('readonly', false)
+                }else{
+                    $('#anggaran_setuju').attr('readonly', true)
+                    $('#anggaran_setuju').val(0)
+                }
+            })
         });
     </script>
 @endpush

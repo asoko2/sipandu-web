@@ -378,10 +378,24 @@
         Tim Pendamping maka dapat direkomendasikan sebagai berikut:
     </p>
     <p>
-        <b>A. LAYAK</b> atau <b>MEMENUHI SYARAT</b> dan bisa digunakan untuk mengajukan permohonan penyaluran
+        @php
+            $layak = '';
+            if ($data->rekomendasi == 2) {
+                $layak = 'text-decoration : line-through;';
+            }
+        @endphp
+        <b>A. <span style="<?php echo $layak; ?>">LAYAK</b></span> atau <span style="<?php echo $layak; ?>"><b>MEMENUHI
+                SYARAT</b></span> dan bisa digunakan untuk mengajukan permohonan penyaluran
     </p>
     <p>
-        <b>B. TIDAK LAYAK</b> dan perlu di perbaiki /dicukupi kembali oleh Desa *)
+        @php
+            $tidak_layak = '';
+            if ($data->rekomendasi == 1) {
+                $tidak_layak = 'text-decoration : line-through;';
+            }
+        @endphp
+        <b>B. <span style="<?php echo $tidak_layak; ?>">TIDAK LAYAK</span></b> dan perlu di perbaiki /dicukupi kembali oleh
+        Desa *)
     </p>
     <p>Catatan :</p>
     <div class="w-100" style="border: 1px solid black; padding: 8px;">

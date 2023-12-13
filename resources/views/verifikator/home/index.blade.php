@@ -14,19 +14,24 @@
     <div class="row">
         <!-- Left col -->
         <section class="col-lg-12 ">
-            <div class="card card-default color-palette-box">
-                {{-- <div class="card-header">
-                    <h3 class="card-title">
-                        <b>
-                            Dashboard
-                        </b>
-                    </h3>
-                </div> --}}
-                <div class="card-body">
-                    <p>Halo User, {{ Auth::user()->name }}.</p>
-                    <h3>Selamat datang di Aplikasi <b>SiPandu</b></h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-default color-palette-box">
+                        <div class="card-body">
+                            <p>Halo User, {{ Auth::user()->name }}.</p>
+                            <h3>Selamat datang di Aplikasi <b>SiPandu</b></h3>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
                 </div>
-                <!-- /.card-body -->
+                <div class="col-md-6">
+                    <div class="card card-default color-palette-box">
+                        <div class="card-body">
+                            <h3>Anda memiliki <span class="font-weight-bold text-red" style="font-size: 2.5rem">{{ $unverified_usulan_count }}</span> usulan yang belum diverifikasi</h3>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>                
             </div>
             <div class="card card-default color-palette-box">
                 <div class="card-header">

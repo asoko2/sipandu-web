@@ -45,10 +45,18 @@ class SettingVerifikatorController extends Controller
     public function store(Request $request)
     {
         try {
+            $verifikator_number = "verifikator_{$request->no}";
+            $last_number = $request->no - 1;
+            $last_verifikator_number = "verifikator_{$last_number}";
+            
+            DB::statement("ALTER TABLE hasil_pemeriksaans ADD COLUMN {$verifikator_number} CHAR(1) NULL AFTER {$last_verifikator_number} ");
+            
             Verifikator::insert([
                 'no' => $request->input('no'),
                 'user_id' => $request->input('user_id'),
             ]);
+
+            
 
             Session::flash('message', 'Berhasil tambah verifikator');
             Session::flash('alert-class', 'alert-success');

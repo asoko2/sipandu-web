@@ -27,8 +27,16 @@ class VerifikasiController extends Controller
 
     public function show($id)
     {
+        $select_query = ['a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.check_spj', 'hp.anggaran_setuju'];
+
+        $jumlah_verifikator = DB::table('verifikators')->count();
+        for ($i = 0; $i < $jumlah_verifikator; $i++) {
+            $verifikator_number = 'hp.verifikator_' . $i + 1;
+            $select_query[] = $verifikator_number;
+        }
+
         $ajuan = DB::table('ajuans as a')
-            ->select('a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.verifikator_1', 'hp.verifikator_2', 'hp.verifikator_3', 'hp.verifikator_4', 'hp.verifikator_5', 'hp.verifikator_6', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.check_spj', 'hp.anggaran_setuju')
+            ->select($select_query)
             ->join('desas as d', 'a.kode_desa', '=', 'd.kode_desa')
             ->join('users as u', 'a.user_id', '=', 'u.id')
             ->join('anggarans as ag', 'a.kode_desa', '=', 'ag.kode_desa')
@@ -79,7 +87,11 @@ class VerifikasiController extends Controller
     {
         $ajuan = Ajuan::find($id);
 
-        $verifikator = DB::table('verifikators')->where('user_id', Auth::user()->id)->first();
+        $verifikator = DB::table('verifikators as v')
+            ->select('v.*', 'u.name')
+            ->join('users as u', 'v.user_id', '=', 'u.id')
+            ->where('user_id', Auth::user()->id)
+            ->first();
 
         $b = str_replace(".", "", $request->anggaran_setuju);
         $anggaran_setuju = str_replace(",", ".", $b);
@@ -125,10 +137,20 @@ class VerifikasiController extends Controller
             DB::table('ajuans')
                 ->where('id', $id)
                 ->update([
-                    'catatan' => $request->input('catatan')
+                    'catatan' => $request->input('catatan'),
+                    'rekomendasi' => $request->input('rekomendasi'),
+                    'status' => 3,
                 ]);
 
-            Session::flash('message', 'Berhaisl verifikasi ajuan');
+            $message = 'Ajuan anda dengan kode ' . $ajuan->kode_pengajuan . ' telah diverifikasi oleh ' . $verifikator->name;
+            DB::table('notifications')
+                ->insert([
+                    'ajuan_id' => $ajuan->id,
+                    'user_id' => $ajuan->user_id,
+                    'message' => $message,
+                ]);
+
+            Session::flash('message', 'Berhasil verifikasi ajuan');
             Session::flash('alert-class', 'alert-info');
 
             return redirect('verifikator/verifikasi');
@@ -137,7 +159,6 @@ class VerifikasiController extends Controller
             return redirect('verifikator/verifikasi/' . $id)->withErrors($th->getMessage());
         }
     }
-
 
     public function getAjuanVerifikasiJSON(Request $request)
     {
@@ -158,7 +179,8 @@ class VerifikasiController extends Controller
             ->join('desas', 'ajuans.kode_desa', '=', 'desas.kode_desa')
             ->join('users', 'ajuans.user_id', '=', 'users.id')
             ->select('ajuans.*', 'desas.nama_desa', 'users.name')
-            ->where('status', 1);
+            ->where('status', 1)
+            ->orWhere('status', 3);
 
         $totalData = $ajuan->count();
 
@@ -205,8 +227,6 @@ class VerifikasiController extends Controller
 
         $no_verifikator = Verifikator::where('user_id', Auth::user()->id)->first()->no;
 
-        // dd($no_verifikator);
-
         $data = array();
         if (!empty($ajuans)) {
             $i = $start + 1;
@@ -225,7 +245,7 @@ class VerifikasiController extends Controller
                 } else if ($no_verifikator == 5) {
                     $verif = $hasil_pemeriksaan->verifikator_5 ?? 0;
                 } else {
-                    $verif = $hasil_pemeriksaan->verifikator_5 ?? 0;
+                    $verif = $hasil_pemeriksaan->verifikator_6 ?? 0;
                 }
 
                 // dd($ajuan);

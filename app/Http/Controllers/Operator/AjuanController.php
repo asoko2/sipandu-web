@@ -325,11 +325,12 @@ class AjuanController extends Controller
                 } else if ($ajuan->status == 1) {
                     $status = 'Dikirim';
                 } else if ($ajuan->status == 2) {
-                    $status = 'Layak / Memenuhi Syarat';
+                    // $status = 'Layak / Memenuhi Syarat';
+                    $status = 'Proses Verifikasi';
                 } else if ($ajuan->status == 3) {
-                    $status = 'Tidak Layak';
-                } else {
-                    $status = 'Dibatalkan';
+                    $status = 'Diverifikasi';
+                // } else {
+                //     $status = 'Dibatalkan';
                 }
                 $nestedData['status'] = $status;
                 if ($ajuan->status == 0) {
@@ -337,6 +338,10 @@ class AjuanController extends Controller
                     <a href='javascript:void(0)' title='KIRIM' data-id='{$ajuan->id}' id='btn-kirim' class='btn btn-success btn-sm'><i class='fa fa-paper-plane'></i></a>&nbsp;
                     <a href='" . url('/operator/pengajuan/edit') . '/' . $ajuan->id . "' title='EDIT' data='{$ajuan->id}' class='btn btn-primary btn-sm'><i class='fa fa-pen'></i></a>&nbsp;
                     <a href='javascript:void(0)' title='BATALKAN' data-id='{$ajuan->id}' id='btn-cancel' class='btn btn-danger btn-sm'><i class='fa fa-ban'></i></a>
+                    ";
+                } else if ($ajuan->status == 2) {
+                    $action = "
+                    <a href='" . url('/operator/pengajuan/detail') . '/' . $ajuan->id . "' title='DETAIL' data-id='{$ajuan->id}' id='btn-detail' class='btn btn-info btn-sm'><i class='fa fa-eye'></i></a>&nbsp;
                     ";
                 } else {
                     $action = '';

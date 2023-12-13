@@ -142,6 +142,8 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/kirim-ajuan-by-id', [AjuanController::class, 'kirimAjuanById'])->name('kirim-ajuan-by-id');
                 Route::post('/cancel-ajuan-by-id', [AjuanController::class, 'cancelAjuanById'])->name('cancel-ajuan-by-id');
             });
+
+            Route::post('/read-notification', [OperatorHomeController::class, 'readNotification'])->name('read-notification');
         });
     });
 

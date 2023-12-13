@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Desa;
+use App\Models\Verifikator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 function getListNamaDesa()
@@ -68,4 +70,69 @@ function getListRealisasiDesa()
   $realisasi_desa = json_encode(array_values($realisasi_desa));
 
   return $realisasi_desa;
+}
+
+function getUnverifiedUsulanCount(){
+  
+  $no_verifikator = Verifikator::where('user_id', Auth::user()->id)->first()->no;
+
+  $count = DB::table('hasil_pemeriksaans')
+              ->where('verifikator_'.$no_verifikator, 0)
+              ->count();
+
+  return $count;            
+}
+
+function getNewNotificationCount()
+{
+  $notifications = DB::table('notifications')
+    ->where('user_id', Auth::user()->id)
+    ->where('read_at', null)
+    ->count();
+
+  return $notifications;
+}
+
+function getNotification()
+{
+  $notifications = DB::table('notifications')
+    ->selectRaw(
+      '*, 
+        timestampdiff(YEAR, created_at, now()) as YEARS, 
+        timestampdiff(MONTH, created_at, now()) as MONTHS, 
+        timestampdiff(WEEK, created_at, now()) as WEEKS, 
+        timestampdiff(day, created_at, now()) as DAYS, 
+        timestampdiff(HOUR, created_at, now()) as HOURS, 
+        timestampdiff(MINUTE, created_at, now()) as MINUTES, 
+        timestampdiff(SECOND, created_at, now()) as SECONDS 
+        ',
+    )
+    ->where('user_id', Auth::user()->id)
+    ->orderBy('id', 'desc')
+    ->limit(10)
+    ->get();
+
+  return $notifications;
+}
+
+function getNotificationTimeDiff($notification)
+{
+  $time = '';
+  if ($notification->YEARS > 0) {
+    $time .= $notification->YEARS . 'y';
+  } elseif ($notification->MONTHS > 0) {
+    $time .= $notification->MONTHS . 'm';
+  } elseif ($notification->WEEKS > 0) {
+    $time .= $notification->WEEKS . 'w';
+  } elseif ($notification->DAYS > 0) {
+    $time .= $notification->DAYS . 'd';
+  } elseif ($notification->HOURS > 0) {
+    $time .= $notification->HOURS . 'h';
+  } elseif ($notification->MINUTES > 0) {
+    $time .= $notification->MINUTES . 'm';
+  } elseif ($notification->SECONDS > 0) {
+    $time .= $notification->SECONDS . 's';
+  }
+
+  return $time;
 }

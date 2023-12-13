@@ -16,7 +16,7 @@
             <!-- small box -->
             <div class="small-box bg-lightblue" bis_skin_checked="1">
                 <div class="inner" bis_skin_checked="1">
-                    <h3>Rp. {{ $total_anggaran }}</h3>
+                    <h3>Rp. {{ number_format($total_anggaran, 2, ',', '.') }}</h3>
 
                     <p>Total Anggaran</p>
                 </div>
