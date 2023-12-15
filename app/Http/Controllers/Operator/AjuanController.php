@@ -63,7 +63,7 @@ class AjuanController extends Controller
         $skDasarKegiatanName = $this->setFileName($request->file('skDasarKegiatan'));
         $spjName = $this->setFileName($request->file('spj'));
 
-        $lastId = Ajuan::orderBy('id', 'desc')->first();
+        $lastId = Ajuan::orderBy('id', 'desc')->count();
 
         if (!$lastId) {
             $ajuanNumber = sprintf("%010d", 1);
@@ -381,6 +381,21 @@ class AjuanController extends Controller
         try {
             //code...
             $ajuan->save();
+
+            DB::table('hasil_pemeriksaans')->insert([
+                'ajuan_id' => $ajuan->id,
+                'check_surat_permintaan_pembayaran_spp' => $request->input('check_surat_permintaan_pembayaran_spp'),
+                'check_rab' => $request->input('check_rab'),
+                'check_pernyataan_pertanggungjawaban' => $request->input('check_pernyataan_pertanggungjawaban'),
+                'check_belanja_dpa' => $request->input('check_belanja_dpa'),
+                'check_lapor_pertanggungjawaban' => $request->input('check_lapor_pertanggungjawaban'),
+                'check_patuh_kebijakan' => $request->input('check_patuh_kebijakan'),
+                'check_sk_tim_pelaksana' => $request->input('check_sk_tim_pelaksana'),
+                'check_sk_dasar_kegiatan' => $request->input('check_sk_dasar_kegiatan'),
+                'check_spj' => $request->input('check_spj'),
+                'anggaran_setuju' => 0,
+            ]);
+
             return response()->json([
                 'message' => 'Sukses kirim pengajuan'
             ]);
