@@ -142,7 +142,7 @@
                                     success: function(data) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Your file has been deleted.',
+                                            `Berhasil hapus desa ${desa.nama_desa}.`,
                                             'success'
                                         )
 
@@ -151,7 +151,7 @@
                                     error: function(err) {
                                         Swal.fire(
                                             'Gagal Hapus',
-                                            `Gagal Hapus desa ${desa.nama_Desa}`,
+                                            `Gagal Hapus desa ${desa.nama_desa}`,
                                             'error'
                                         )
                                     }

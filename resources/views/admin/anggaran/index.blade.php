@@ -110,66 +110,6 @@
                     }
                 ],
             });
-
-            $('#example1').on('click', '#btn-hapus', function() {
-                var id = $(this).data('id')
-
-                $.ajax({
-                    url: '{{ route('get-anggaran-by-id') }}',
-                    method: 'post',
-                    type: 'ajax',
-                    data: {
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function(anggaran) {
-                        Swal.fire({
-                            title: 'WARNING!!!',
-                            text: `Apakah anda yakin akan menghapus anggaran ${anggaran.name} ?`,
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Hapus!',
-                            cancelButtonText: 'Batal',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: '{{ route('delete-anggaran-by-id') }}',
-                                    method: 'post',
-                                    type: 'ajax',
-                                    data: {
-                                        id: anggaran.id
-                                    },
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        Swal.fire(
-                                            'Deleted!',
-                                            'Your file has been deleted.',
-                                            'success'
-                                        )
-
-                                        table.ajax.reload()
-                                    },
-                                    error: function(err) {
-                                        Swal.fire(
-                                            'Gagal Hapus',
-                                            `Gagal Hapus anggaran ${anggaran.name}`,
-                                            'error'
-                                        )
-                                    }
-                                })
-                            } else {
-                                Swal.fire(
-                                    'Dibatalkan',
-                                    `Hapus anggaran ${data.name} dibatalkan`,
-                                    'error'
-                                )
-                            }
-                        })
-                    }
-                })
-            })
         });
     </script>
 @endpush

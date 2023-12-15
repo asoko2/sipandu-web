@@ -138,7 +138,7 @@
                                     success: function(data) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Your file has been deleted.',
+                                            'Berhasil hapus verifikator.',
                                             'success'
                                         )
 
