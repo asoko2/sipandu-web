@@ -45,13 +45,6 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ url('admin/master-role') }}"
-                                    class="nav-link {{ $nav == 'master-role' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Master Role</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ url('admin/master-desa') }}"
                                     class="nav-link {{ $nav == 'master-desa' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
