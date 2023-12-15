@@ -329,8 +329,8 @@ class AjuanController extends Controller
                     $status = 'Proses Verifikasi';
                 } else if ($ajuan->status == 3) {
                     $status = 'Diverifikasi';
-                // } else {
-                //     $status = 'Dibatalkan';
+                } else {
+                    $status = 'Dibatalkan';
                 }
                 $nestedData['status'] = $status;
                 if ($ajuan->status == 0) {
