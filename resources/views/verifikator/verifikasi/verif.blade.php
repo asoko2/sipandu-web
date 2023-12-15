@@ -17,13 +17,13 @@
 @endpush
 @section('page-nav')
     <div class="col-sm-6">
-        <h1 class="m-0">Setuju Pengajuan Anggaran</h1>
+        <h1 class="m-0">Verifikasi Pengajuan Anggaran</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ url('/operator/dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{ url('/operator/pengajuan') }}">Pengajuan Anggaran</a></li>
-            <li class="breadcrumb-item active">Setuju Pengajuan Anggaran</li>
+            <li class="breadcrumb-item active">Verifikasi Pengajuan Anggaran</li>
         </ol>
     </div><!-- /.col -->
 @endsection
