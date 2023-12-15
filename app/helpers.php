@@ -78,6 +78,7 @@ function getUnverifiedUsulanCount(){
 
   $count = DB::table('hasil_pemeriksaans')
               ->where('verifikator_'.$no_verifikator, 0)
+              ->orWhere('verifikator_'.$no_verifikator, null)
               ->count();
 
   return $count;            
