@@ -16,12 +16,6 @@ return new class extends Migration
         Schema::create('hasil_pemeriksaans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ajuan_id')->constrained();
-            $table->char('verifikator_1', 1)->nullable();
-            $table->char('verifikator_2', 1)->nullable();
-            $table->char('verifikator_3', 1)->nullable();
-            $table->char('verifikator_4', 1)->nullable();
-            $table->char('verifikator_5', 1)->nullable();
-            $table->char('verifikator_6', 1)->nullable();
             $table->char('check_surat_permintaan_pembayaran_spp', 1)->nullable();
             $table->char('check_rab', 1)->nullable();
             $table->char('check_pernyataan_pertanggungjawaban', 1)->nullable();
