@@ -49,7 +49,12 @@ class SettingVerifikatorController extends Controller
             $last_number = $request->no - 1;
             $last_verifikator_number = "verifikator_{$last_number}";
             
-            DB::statement("ALTER TABLE hasil_pemeriksaans ADD COLUMN {$verifikator_number} CHAR(1) NULL AFTER {$last_verifikator_number} ");
+            if($last_number == 0){
+                DB::statement("ALTER TABLE hasil_pemeriksaans ADD COLUMN {$verifikator_number} CHAR(1) NULL AFTER ajuan_id ");
+            }else{
+                DB::statement("ALTER TABLE hasil_pemeriksaans ADD COLUMN {$verifikator_number} CHAR(1) NULL AFTER {$last_verifikator_number} ");
+            }
+            
             
             Verifikator::insert([
                 'no' => $request->input('no'),
