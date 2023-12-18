@@ -33,7 +33,7 @@ class CetakController extends Controller
         $pdf = Pdf::loadView('cetak.ceklis', [
             'data' => $ajuan,
         ]);
-        return $pdf->download('Rekomendasi dan Verifikasi Ajuan Desa ' . $ajuan->nama_desa . ' ' . date('Ymdhis') . '.pdf');
+        return $pdf->download('Rekomendasi dan Verifikasi Ajuan Desa ' . $ajuan->nama_desa . '_' . date('Ymd-his') . '.pdf');
     }
 
     public function view($id)
