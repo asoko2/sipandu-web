@@ -12,6 +12,7 @@ class CetakController extends Controller
 {
     public function download($id)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $select_query = ['a.*', 'd.nama_desa', 'u.name', 'ag.total_anggaran', 'hp.check_surat_permintaan_pembayaran_spp', 'hp.check_rab', 'hp.check_pernyataan_pertanggungjawaban', 'hp.check_belanja_dpa', 'hp.check_lapor_pertanggungjawaban', 'hp.check_patuh_kebijakan', 'hp.check_sk_tim_pelaksana', 'hp.check_sk_dasar_kegiatan', 'hp.check_spj', 'hp.anggaran_setuju'];
 
         $jumlah_verifikator = DB::table('verifikators')->count();
@@ -32,17 +33,7 @@ class CetakController extends Controller
         $pdf = Pdf::loadView('cetak.ceklis', [
             'data' => $ajuan,
         ]);
-        return $pdf->download('Rekomendasi dan Verifikasi Ajuan Desa ' . $ajuan->nama_desa . ' ' . date('dd M Y') . '.pdf');
-
-        // $pdf = Pdf::loadHTML('<h1>Text</h1>');
-        // return $pdf->download('tes.pdf');
-
-
-        // return Pdf::loadFile(public_path().'/cetak)
-
-        // return view('cetak.ceklis', [
-        //     'data' => $ajuan,
-        // ]);
+        return $pdf->download('Rekomendasi dan Verifikasi Ajuan Desa ' . $ajuan->nama_desa . ' ' . date('Ymdhis') . '.pdf');
     }
 
     public function view($id)
