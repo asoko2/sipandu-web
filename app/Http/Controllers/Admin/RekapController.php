@@ -62,7 +62,10 @@ class RekapController extends Controller
         }
 
         if (empty($search)) {
-            $ajuans = $ajuan->offset($start)
+            $ajuans = $ajuan
+                ->whereNot('status', '1')
+                ->whereNot('status', '4')
+                ->offset($start)
                 ->limit($limit)
                 ->orderBy('status', 'asc')
                 ->get();
@@ -70,7 +73,9 @@ class RekapController extends Controller
             $ajuans = $ajuan->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('nama_desa', 'LIKE', "%{$search}%")
-                    ->orWhere('kode_pengajuan', 'LIKE', "%{$search}%");
+                    ->orWhere('kode_pengajuan', 'LIKE', "%{$search}%")
+                    ->whereNot('status', '=', '1')
+                    ->whereNot('status', '=', '4');
             })->offset($start)
                 ->limit($limit)
                 ->orderBy('status', 'asc')
@@ -79,6 +84,8 @@ class RekapController extends Controller
             $totalFiltered = $ajuan->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('kode_pengajuan', 'LIKE', "%{$search}%")
                 ->orWhere('nama_desa', 'LIKE', "%{$search}%")
+                ->whereNot('status', '1')
+                ->whereNot('status', '4')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy('status', 'asc')
