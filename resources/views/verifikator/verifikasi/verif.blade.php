@@ -311,12 +311,12 @@
                                     <td colspan="2">
                                         <input class="" type="radio" name="rekomendasi" value="1"
                                             {{ $data->rekomendasi == 1 ? 'checked' : '' }}>
-                                            <b>LAYAK</b> atau <b>MEMENUHI SYARAT</b>
+                                        <b>LAYAK</b> atau <b>MEMENUHI SYARAT</b>
                                     </td>
                                     <td colspan="2">
                                         <input class="" type="radio" name="rekomendasi" value="2"
                                             {{ $data->rekomendasi == 2 ? 'checked' : '' }}>
-                                            <b>TIDAK LAYAK</b>
+                                        <b>TIDAK LAYAK</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -381,16 +381,21 @@
             bsCustomFileInput.init();
 
             var nominal = document.getElementById("anggaran_setuju");
+            nominal.value = formatNominal(nominal.value)
             nominal.addEventListener("keyup", function(e) {
                 // tambahkan 'Rp.' pada saat form di ketik
                 // gunakan fungsi formatNominal() untuk mengubah angka yang di ketik menjadi format angka
                 nominal.value = formatNominal(this.value);
             });
 
-            $('input[name="rekomendasi"]').on('click', function(){
-                if($(this).val() == 1){
+            if ($('input[name="rekomendasi"]').val() == 1) {
+                $('#anggaran_setuju').attr('readonly', false)
+            }
+
+            $('input[name="rekomendasi"]').on('click', function() {
+                if ($(this).val() == 1) {
                     $('#anggaran_setuju').attr('readonly', false)
-                }else{
+                } else {
                     $('#anggaran_setuju').attr('readonly', true)
                     $('#anggaran_setuju').val(0)
                 }
